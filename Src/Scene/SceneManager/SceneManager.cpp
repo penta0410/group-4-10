@@ -3,7 +3,6 @@
 #include "../Play/ScenePlay.h"
 #include "../Result/SceneResult.h"
 
-
 SCENE_STATE_ID SceneManager::SceneManager::g_CurrentSceneStateID;	
 SCENE_ID SceneManager::SceneManager::g_CurrentSceneID;	
 
@@ -66,6 +65,8 @@ void SceneManager::LoopScene()
 		//“Ç‚Ýž‚Ýˆ—
 		scene_state->Load();
 
+		//ƒ‹[ƒv‚ÖˆÚ“®
+		SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_LOOP;
 	}
 	break;
 	case SCENE_STATE_ID::SCENE_ID_LOOP:
@@ -74,12 +75,16 @@ void SceneManager::LoopScene()
 		scene_state->Step();
 		//•`‰æˆ—
 		scene_state->Draw();
+		
 	}
 	break;
 	case SCENE_STATE_ID::SCENE_ID_FIN:
 	{
 		//I—¹ˆ—
 		scene_state->Fin();
+
+		//INIT‚ÖˆÚ“®
+		SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_INIT;
 	}
 	break;
 	}

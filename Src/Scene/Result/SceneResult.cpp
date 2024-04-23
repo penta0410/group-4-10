@@ -8,8 +8,7 @@
 void Result::Init()
 {
 	
-	//ループへ
-	SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_LOOP;
+	
 }
 //ロード
 void Result::Load()
@@ -35,7 +34,7 @@ void Result::Step()
 //描画処理
 void Result::Draw()
 {
-	//デバッグ
+	//リザルト
 	SetFontSize(30);
 	DrawFormatString(100, 100, GetColor(255, 255, 255), "リザルトです", true);
 	DrawFormatString(100, 200, GetColor(255, 255, 255), "タイトルへ行くにはエンターを押してください", true);
@@ -46,8 +45,7 @@ void Result::Draw()
 void Result::Fin()
 {
 
-	//INITへ移動
-	SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_INIT;
+	
 	//タイトルへ移動
 	SceneManager::g_CurrentSceneID = SCENE_ID::SCENE_ID_TITLE;
 	

@@ -10,8 +10,7 @@
 void Play::Init()
 {
 
-	//ループへ
-	SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_LOOP;
+	
 }
 
 //ロード
@@ -23,6 +22,7 @@ void Play::Load()
 //通常処理
 void Play::Step()
 {	
+
 
 	//シーンへの遷移
 	//エンター押されたなら
@@ -38,10 +38,10 @@ void Play::Step()
 //描画処理
 void Play::Draw()
 {
-	//デバッグ
+	//プレイ
 	SetFontSize(30);
 	DrawFormatString(100, 100, GetColor(255, 255, 255), "プレイです", true);
-	DrawFormatString(100, 200, GetColor(255, 255, 255), "aaリザルトへ行くにはエンターを押してください", true);
+	DrawFormatString(100, 200, GetColor(255, 255, 255), "リザルトへ行くにはエンターを押してください", true);
 	SetFontSize(16);
 }
 
@@ -49,8 +49,6 @@ void Play::Draw()
 void Play::Fin()
 {
 
-	//INITへ移動
-	SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_INIT;
 	//リザルトへ移動
 	SceneManager::g_CurrentSceneID = SCENE_ID::SCENE_ID_RESULT;
 }
