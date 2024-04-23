@@ -1,16 +1,13 @@
 #pragma once
-#include "../Scene.h"
-#include "../../Player/Player.h"
 #include "../../Transparent/Transparent.h"
+#include "../Scene.h"
 
-const int SCORE_NUMBER_MAX_NUM = 13;
 
 //リザルトクラス
-class RESULT : public SCENE_BASE
+class Result : public Scene_Base
 {
 private:
-	//クラス宣言
-	Player player;
+	
 
 
 
@@ -18,7 +15,7 @@ private:
 public:
 
 	//初期化
-	void Init(int m_score);
+	void Init() override;
 	//ロード
 	void Load() override;
 	//音楽を流す

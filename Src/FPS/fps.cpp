@@ -3,8 +3,6 @@
 #include "../Common.h"
 #include "../Scene/Title/SceneTitle.h"
 
-TITLE m_title;
-
 //FPSŒvŽZ
 void CalcFPS()
 {

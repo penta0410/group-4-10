@@ -1,61 +1,58 @@
 #include "SceneTitle.h"
+#include "../SceneManager/SceneManager.h"
 
 //=============================
 // タイトルシーン
 //=============================
 
 //初期化
-void TITLE::Init()
+void Title::Init()
 {
 	
 
-	//タイトルループへ
-	g_CurrentSceneID = SCENE_ID_LOOP_TITLE;
+	//ループへ
+	SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_LOOP;
 }
 
 //ロード
-void TITLE::Load()
+void Title::Load()
 {
 
 
-}
-
-void TITLE::Sound()
-{
-	
 }
 
 //通常処理
-void TITLE::Step()
+void Title::Step()
 {
 	
 	//メインメニューシーンへの遷移
 	//Enterキー押されたなら
 	if (IsKeyPush(KEY_INPUT_RETURN))
 	{
-		//シーンフラグをプレイシーンに変更
-		m_SceneFlag = 0;
-		//タイトル後処理へ移動
-		g_CurrentSceneID = SCENE_ID_FIN_TITLE;
+		
+		//後処理へ移動
+		SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_FIN;
 	}
 
 }
 
 //描画処理
-void TITLE::Draw()
+void Title::Draw()
 {
-	
+	//デバッグ
+	SetFontSize(30);
+	DrawFormatString(100, 100, GetColor(255, 255, 255), "タイトルです", true);
+	DrawFormatString(100, 200, GetColor(255, 255, 255), "プレイへ行くにはエンターを押してください", true);
+	SetFontSize(16);
 }
 
 //消去処理
-void TITLE::Fin()
+void Title::Fin()
 {
 	
-	//SceneFlagが0の時
-	if (m_SceneFlag == 0)
-	{
-		//INITへ移動
-		g_CurrentSceneID = SCENE_ID_INIT_PLAY;
-	}
+	//INITへ移動
+	SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_INIT;
+	//プレイへ移動
+	SceneManager::g_CurrentSceneID = SCENE_ID::SCENE_ID_PLAY;
 }
 

@@ -1,13 +1,12 @@
 #pragma once
 #include "DxLib.h"
-#include "../Scene.h"
 #include "../../Input/Input.h"
 #include "../../Transparent/Transparent.h"
 #include "../../Collision/Collision.h"
-
+#include "../Scene.h"
 
 //タイトルクラス
-class TITLE : public SCENE_BASE 
+class Title : public Scene_Base
 {
 private:
 	

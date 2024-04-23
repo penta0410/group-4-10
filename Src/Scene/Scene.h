@@ -1,53 +1,44 @@
 #pragma once
 
 //シーンベースクラス
-class SCENE_BASE
+class Scene_Base
 {
 protected:
 
-	//シーンフラグ
-	int m_SceneFlag;
-	//シーンフレーム
-	int m_SceneFlame;
-	
 public:
 
 	//初期化
-	void virtual Init();
+	void virtual Init() {};
 	//データロード
-	void virtual Load();
+	void virtual Load() {};
 	//通常処理
-	void virtual Step();
+	void virtual Step() {};
 	//描画処理
-	void virtual Draw();
+	void virtual Draw() {};
 	//後処理
-	void virtual Fin();
+	void virtual Fin() {};
 
 };
 
-enum SCENE_ID
+//シーン種類
+enum class SCENE_ID
 {
-	//タイトル関連
-	SCENE_ID_INIT_TITLE = 100,
-	SCENE_ID_LOOP_TITLE,
-	SCENE_ID_FIN_TITLE,
+	SCENE_ID_TITLE = 100,	//タイトル
 
-	//メインメニュー関連
-	SCENE_ID_INIT_MEIN_MENU = 200,
-	SCENE_ID_LOOP_MEIN_MENU,
-	SCENE_ID_FIN_MEIN_MENU,
-
-	//プレイ関連
-	SCENE_ID_INIT_PLAY = 300,
-	SCENE_ID_LOOP_PLAY,
-	SCENE_ID_FIN_PLAY,
-
-	//リザルト関連
-	SCENE_ID_INIT_RESULT = 400,
-	SCENE_ID_LOOP_RESULT,
-	SCENE_ID_FIN_RESULT,
-
+	SCENE_ID_PLAY = 200,	//プレイ
+	
+	SCENE_ID_RESULT = 300,	//リザルト
 };
-//現在のシーンID
-extern int g_CurrentSceneID;
+
+//シーン状態
+enum class SCENE_STATE_ID
+{
+	
+	SCENE_ID_INIT = 100,
+	
+	SCENE_ID_LOOP,
+
+	SCENE_ID_FIN,
+	
+};
 

@@ -2,51 +2,53 @@
 #include "DxLib.h"
 #include "../../Input/Input.h"
 #include "../../Collision/Collision.h"
+#include "../SceneManager/SceneManager.h"
 
 //初期化
-void RESULT::Init(int m_score)
+void Result::Init()
 {
 	
-	//リザルトループへ
-	g_CurrentSceneID = SCENE_ID_LOOP_RESULT;
+	//ループへ
+	SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_LOOP;
 }
 //ロード
-void RESULT::Load()
+void Result::Load()
 {
 
 
 }
 
 //通常処理
-void RESULT::Step()
+void Result::Step()
 {
 
 
 	//タイトルシーンへの遷移
 	if (IsKeyPush(KEY_INPUT_RETURN)) {
-		//シーンフラグをタイトルシーンに変更
-		m_SceneFlag = 0;
-		//リザルト後処理へ移動
-		g_CurrentSceneID = SCENE_ID_FIN_RESULT;
+		
+		//後処理へ移動
+		SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_FIN;
 	}
 
 }
 
 //描画処理
-void RESULT::Draw()
+void Result::Draw()
 {
-	
-
+	//デバッグ
+	SetFontSize(30);
+	DrawFormatString(100, 100, GetColor(255, 255, 255), "リザルトです", true);
+	DrawFormatString(100, 200, GetColor(255, 255, 255), "タイトルへ行くにはエンターを押してください", true);
+	SetFontSize(16);
 }
 
 //後処理
-void RESULT::Fin()
+void Result::Fin()
 {
 
-	//SceneFlagが0の時
-	if (m_SceneFlag == 0)
-	{
-		//プレイINITへ移動
-		g_CurrentSceneID = SCENE_ID_INIT_TITLE;
-	}
+	//INITへ移動
+	SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_INIT;
+	//タイトルへ移動
+	SceneManager::g_CurrentSceneID = SCENE_ID::SCENE_ID_TITLE;
+	
 }

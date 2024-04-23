@@ -1,28 +1,15 @@
 
 #include "DxLib.h"
 #include "Scene/Scene.h"
-#include "../Src/Scene/Title/SceneTitle.h"
-#include "../Src/Scene/Play/ScenePlay.h"
-#include "../Src/Scene/Result/SceneResult.h"
 #include "Common.h"
 #include "FPS/fps.h"
-#include "Scene/Meinmenu/MeinmenuScene.h"
 #include "Input/Input.h"
+#include "Scene/SceneManager/SceneManager.h"
 
 //フレームレート情報変数
 FrameRateInfo frameRateInfo;
 
-//最初のシーンID
-int g_CurrentSceneID = SCENE_ID_INIT_TITLE;
-
-//タイトルクラス宣言
-TITLE title;
-//メインメニュークラス宣言
-MEIN_MENU meinmenu;
-//プレイシーンクラス宣言
-PLAY play;
-//リザルトシーンクラス宣言
-RESULT result;
+SceneManager c_scene_manager;			//シーンマネージャークラス宣言
 
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
 {
@@ -41,6 +28,9 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	SetDrawScreen(DX_SCREEN_BACK);
 	//入力制御初期化
 	InitInput();
+
+	//シーンマネージャー初期化
+	c_scene_manager.InitScene();
 
 	//=====================================
 	//ゲームメインループ
@@ -78,88 +68,11 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			//入力制御ステップ
 			StepInput();
 
-			//シーンIDによって処理の振り分け
-			switch (g_CurrentSceneID)
-			{
-			case SCENE_ID_INIT_TITLE:
-			{
-				//タイトル初期化
-				title.Init();
-				title.Load();
-				title.Sound();
-			}	break;
-			case SCENE_ID_LOOP_TITLE:
-			{
-				//タイトル通常処理
-				title.Step();
-				//タイトル描画処理
-				title.Draw();
-			}	break;
-			case SCENE_ID_FIN_TITLE:
-			{
-				//タイトル後処理
-				title.Fin();
-			}	break;
-			case SCENE_ID_INIT_MEIN_MENU:
-			{
-				// ゲーム説明初期化
-				meinmenu.Init();
-			}	break;
-			case SCENE_ID_LOOP_MEIN_MENU:
-			{
-				//メインメニュー通常処理
-				meinmenu.Step();
-				//メインメニュー描画処理
-				meinmenu.Draw();
-			}	break;
-			case SCENE_ID_FIN_MEIN_MENU:
-			{
-				//メインメニュー後処理
-				meinmenu.Fin();
-			}	break;
-			case SCENE_ID_INIT_PLAY:
-			{
-				//プレイ初期化  
-				play.Init();
-				play.Load();
-				play.Sound();
-
-			}	break;
-			case SCENE_ID_LOOP_PLAY:
-			{
-				//プレイ描画処理
-				play.Draw();
-				//プレイ通常処理
-				play.Step();
-			}	break;
-			case SCENE_ID_FIN_PLAY:
-			{
-				//プレイ後処理
-				play.Fin();
-			}	break;
-			case SCENE_ID_INIT_RESULT:
-			{
-				//リザルト初期化  
-				result.Init(play.GetCoin());
-				//リザルト読み込み
-				result.Load();
-
-				result.Sound();
-			}   break;
-			case SCENE_ID_LOOP_RESULT:
-			{
-				//リザルト描画処理
-				result.Draw();
-				//リザルト通常処理
-				result.Step();
-			}	break;
-			case SCENE_ID_FIN_RESULT:
-			{
-				//リザルト後処理
-				result.Fin();
-			}   break;
-			}//シーン振り分けのswitch文終了
-
+			//ゲームメイン処理==========================
+			//シーンマネージャーループ
+			c_scene_manager.LoopScene();
+			//===================================
+			
 			//FPS計算
 			CalcFPS();
 			//FPS表示
@@ -172,6 +85,10 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	}//メインループの終わり
 	//最後に１回だけやる処理をここに書く
 	//DXライブラリの後処理
+	
+	//シーンマネージャー終了
+	c_scene_manager.FInScene();
+
 	DxLib_End();
 
 	return 0;

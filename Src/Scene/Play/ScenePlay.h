@@ -1,10 +1,10 @@
 #pragma once
-#include "../Scene.h"
 #include <math.h>
 #include "DxLib.h"
 #include "../../Collision/Collision.h"
 #include "../../Common.h"
 #include "../../Input/Input.h"
+#include "../Scene.h"
 
 //プレイシーン画像枚数
 const int PLAY_IMAGE_PATH_NUM = 4;
@@ -16,21 +16,20 @@ const char PLAY_PATH[PLAY_IMAGE_PATH_NUM][256] =
 
 };
 
-
 //プレイシーンクラス
-class PLAY : public SCENE_BASE
+class Play : public Scene_Base
 {
 private:
 
-	//画像ハンドル
-	int m_ImageHandle[PLAY_IMAGE_PATH_NUM];
+	////画像ハンドル
+	//int m_ImageHandle[PLAY_IMAGE_PATH_NUM];
 
-	//背景座標
-	int m_BG_x[2];
-	int m_BG_y;
-	
-	//背景移動量
-	int m_BG_move_x;
+	////背景座標
+	//int m_BG_x[2];
+	//int m_BG_y;
+	//
+	////背景移動量
+	//int m_BG_move_x;
 
 public:
 
