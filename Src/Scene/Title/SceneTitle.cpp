@@ -1,12 +1,4 @@
-
-#include "DxLib.h"
 #include "SceneTitle.h"
-#include "../../Input/Input.h"
-#include "../../Transparent/Transparent.h"
-#include "../../Collision/Collision.h"
-#include "../../Transparent/Transparent.h"
-
-
 
 //=============================
 // タイトルシーン

@@ -1,6 +1,9 @@
 #pragma once
+#include "DxLib.h"
 #include "../Scene.h"
-
+#include "../../Input/Input.h"
+#include "../../Transparent/Transparent.h"
+#include "../../Collision/Collision.h"
 
 
 //タイトルクラス
@@ -22,9 +25,6 @@ public:
 	void Draw() override;
 	//後処理
 	void Fin() override;
-
-	//音楽を流すだけの処理
-	void Sound();
 
 };
 
