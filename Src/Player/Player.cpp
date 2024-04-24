@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "../Map/Map.h"
 #include "../Transparent/Transparent.h"
+#include "../Input/Input.h"
+#include "../Common.h"
 
 //初期化処理
 void Player::Init()
@@ -22,11 +24,11 @@ void Player::Init()
 	//画像ハンドル
 	memset(m_ImageHandle, -1, sizeof(m_ImageHandle));
 
-	//HP
-	m_HP = 0;
-
 	//プレイヤー無敵フラグ
 	PlayerInviFlag = false;
+
+	//プレイヤー死亡確認フラグ
+	isDeath = false;
 
 	//プレイヤー無敵フレーム
 	PlayerInviFlame = 0;
@@ -35,7 +37,7 @@ void Player::Init()
 	m_alpha = 0;
 
 	//プレイヤーアニメ－ション状態
-	state = PLAYER_STATE_RUN;
+	state = PLAYER_STATE_MIDAIR;
 }
 
 //読み込み処理
@@ -57,20 +59,43 @@ void Player::DefaultValue()
 }
 
 //通常処理
-void Player::Step(int flag)
+void Player::Step()
 {
-	if (state == PLAYER_STATE_RUN) {
-	}
-	else if(state == PLAYER_STATE_JUMP){
+	//プレイヤーがジャンプ可能かどうか
+	if(CanJumpPlayer())
+	switch (state) {
+	case PLAYER_STATE_RUN:	// プレイヤーが動いている最中なら
+		Control();			// 操作できる
+		break;
 
+	case PLAYER_STATE_JUMP:		// プレイヤーがジャンプ状態なら
+		StepJump();				// ジャンプ処理
+		break;
+
+	case PLAYER_STATE_MIDAIR:	// プレイヤーが空中にいるなら
+		CalcGravity();			// 重力計算処理
+		CheckPlayerMidAir();	// プレイヤーが落下しているかチェック
+		break;
+
+	case PLAYER_STATE_FALL:		// プレイヤーが落下しているなら
+		CheckPlayerLanding();	//プレイヤーが着地しているかチェック
+		break;
+
+	case PLAYER_STATE_LANDING:	// プレイヤーが着地したなら
+		PlayerLanding();		//着地処理
+		break;
 	}
+
+	m_nextPosY += m_move_y;
+	// 座標更新
+	UpdatePos();
 }
 
 //描画処理
-void Player::Draw(int flag)
+void Player::Draw()
 {
-	
-
+	// プレイヤーの描画
+	DrawBox(m_posX, m_posY, m_posX + PLAYER_SIZE, m_posY + PLAYER_SIZE, GetColor(255, 255, 255), true);
 }
 
 //終了処理
@@ -88,7 +113,7 @@ void Player::Control()
 	//ジャンプ処理
 	if (IsKeyPush(KEY_INPUT_SPACE))
 	{
-		if (CanJumpPlayer() == true)
+		if (CanJumpPlayer())
 		{
 			//ジャンプ状態に設定
 			state = PLAYER_STATE_JUMP;
@@ -127,7 +152,6 @@ void Player::GetMoveDirection(bool* _dirArray) {
 	// 右方向のチェック
 	if (m_nextPosX > m_posX) {
 		_dirArray[3] = true;
-
 	}
 
 	// 左方向のチェック
@@ -146,7 +170,6 @@ void Player::GetMoveDirection(bool* _dirArray) {
 	// 上方向のチェック
 	if (m_nextPosY < m_posY) {
 		_dirArray[0] = true;
-
 	}
 
 }
@@ -167,38 +190,48 @@ bool Player::IsAirPlayer()
 }
 
 //天井処理
-void Player::PlayerCeiling()
-{
-	//ｙの移動量をリセット
-	m_move_y = 0.0f;
+//void Player::PlayerCeiling()
+//{
+//	//ｙの移動量をリセット
+//	m_move_y = 0.0f;
+//
+//	if (IsAirPlayer())
+//	{
+//		//プレイヤー落下状態に変更
+//		state = PLAYER_STATE_FALL;
+//	}
+//}
 
-	if (IsAirPlayer())
-	{
+// 重力計算処理
+void Player::CalcGravity()
+{
+	m_move_y -= GRAVITY;
+}
+
+//プレイヤーが落下しているかチェック
+void Player::CheckPlayerMidAir()
+{
+	// もしYの速度がマイナスなら落下している
+	if (m_move_y < 0) {
 		//プレイヤー落下状態に変更
 		state = PLAYER_STATE_FALL;
 	}
 }
 
-//落下前チェック
-void Player::StepPlayerMidAir()
+//プレイヤーが着地しているかチェック
+void Player::CheckPlayerLanding()
 {
-	//ジャンプ頂上に到達する２フレーム前にアニメーションを再生する
-	if (state == PLAYER_STATE_JUMP && m_move_y > -GRAVITY * 2)
-	{
-		//空中状態に変更
-		state = PLAYER_STATE_MIDAIR;
+	if (m_nextPosY > WINDOW_HEIGHT - PLAYER_SIZE) {
+		// 着地判定に
+		state = PLAYER_STATE_LANDING;
 	}
 }
 
-//落下更新
-void Player::StepPlayerFall()
+// ジャンプ処理
+void Player::StepJump()
 {
-	//落下し始めて５フレーム後に落下状態にする
-	if (m_move_y > GRAVITY * 5)
-	{
-		//落下状態に変更
-		state = PLAYER_STATE_FALL;
-	}
+	m_move_y = PLAYER_JUMP_POWER;	// 初期値を入れる
+	state = PLAYER_STATE_MIDAIR;	// 空中にいることにする
 }
 
 //着地処理
@@ -206,13 +239,8 @@ void Player::PlayerLanding()
 {
 	//ｙの移動量をリセット
 	m_move_y = 0.0f;
-
-	//待機状態に戻す
-	if (IsAirPlayer())
-	{
-		//状態に変更
-		state = PLAYER_STATE_RUN;
-	}
+	//走っている状態に変更
+	state = PLAYER_STATE_RUN;
 }
 
 //座標を更新
@@ -248,65 +276,3 @@ void Player::UpdatePos() {
 	m_posY = m_nextPosY;
 }
 
-//Hｐセット
-void Player::SetHp(int hp)
-{
-	m_HP = hp;
-}
-
-//プレイヤー無敵かどうか
-bool Player::PlayerInvincible()
-{
-	//プレイヤー無敵フレーム
-	PlayerInviFlame++;
-
-	//プレイヤー無敵
-	PlayerInviFlag = true;
-
-	//1秒たったら無敵解除
-	if (PlayerInviFlame > 120)
-	{
-		//プレイヤー無敵出ない
-		PlayerInviFlag = false;
-
-		//フレーム初期化
-		PlayerInviFlame = 0;
-	}
-
-	return PlayerInviFlag;
-}
-
-//Hp描画
-void Player::DrawHp()
-{
-	DrawBox(m_posX, m_posY, m_posX + PLAYER_SIZE, m_posY + PLAYER_SIZE, GetColor(255, 255, 255), true);
-}
-
-//プレイヤー死亡処理
-bool Player::DeathPlayer()
-{
-	if (m_HP > -20)
-	{
-		return false;
-	}
-	else if (m_HP <= -20)
-	{
-		return true;
-	}
-}
-
-//プレイヤー回復処理
-void Player::PlayerHeal()
-{
-	m_HP += 10;
-}
-
-//プレイヤー無敵処理
-void Player::StepInvincible()
-{
-	//プレイヤーが無敵だったら
-	if (PlayerInvincible() == true)
-	{
-		
-	}
-}
