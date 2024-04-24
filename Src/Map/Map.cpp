@@ -18,6 +18,9 @@ void Map::Init() {
 	ReadFile();
 	isReadFile = true;
 	
+	//マップ移動量
+	m_Map_Move_x = 0;
+
 	//ファイル１読み込み終了フラグ
 	ReadFileFlag_1 = 0;
 	
@@ -33,7 +36,11 @@ void Map::Draw() {
 			if (isReadFile) {
 				int mapchipType = m_FileReadMapData[y][x];
 				if (m_FileReadMapData[y][x] != MAPCHIP_NONE) {
-					move = x * MAP_SIZE - MAP_SPEED;
+
+					//マップスクロール
+					move = x * MAP_SIZE - m_Map_Move_x;
+
+					//あたったら描画しないものを除いて描画
 					if (m_FileReadMapData[y][x] != MAPCHIP_COIN)
 					{
 						if (m_FileReadMapData[y][x] != MAPCHIP_TRAP)
@@ -72,7 +79,8 @@ void Map::Draw() {
 //通常処理
 void Map::Step()
 {
-
+	//マップ移動
+	m_Map_Move_x += MAP_SPEED;
 }
 
 //コイン通常処理
