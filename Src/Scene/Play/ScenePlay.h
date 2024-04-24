@@ -5,6 +5,7 @@
 #include "../../Common.h"
 #include "../../Input/Input.h"
 #include "../Scene.h"
+#include "../../Map/Map.h"
 
 //プレイシーン画像枚数
 const int PLAY_IMAGE_PATH_NUM = 4;
@@ -32,6 +33,8 @@ private:
 	//int m_BG_move_x;
 
 public:
+
+	Map c_map;		//マップクラス宣言
 
 	//初期化
 	void Init() override;

@@ -9,7 +9,7 @@
 //初期化
 void Play::Init()
 {
-
+	c_map.Init();
 	
 }
 
@@ -22,7 +22,7 @@ void Play::Load()
 //通常処理
 void Play::Step()
 {	
-
+	c_map.Step();
 
 	//シーンへの遷移
 	//エンター押されたなら
@@ -38,6 +38,8 @@ void Play::Step()
 //描画処理
 void Play::Draw()
 {
+	c_map.Draw();
+
 	//プレイ
 	SetFontSize(30);
 	DrawFormatString(100, 100, GetColor(255, 255, 255), "プレイです", true);
@@ -48,7 +50,7 @@ void Play::Draw()
 //後処理
 void Play::Fin()
 {
-
+	
 	//リザルトへ移動
 	SceneManager::g_CurrentSceneID = SCENE_ID::SCENE_ID_RESULT;
 }
