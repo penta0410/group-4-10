@@ -64,6 +64,8 @@ void Player::DefaultValue()
 //通常処理
 void Player::Step()
 {
+	//プレイヤーがジャンプ可能かどうか
+	if(CanJumpPlayer())
 	switch (state) {
 	case PLAYER_STATE_RUN:	// プレイヤーが動いている最中なら
 		Control();			// 操作できる
@@ -79,7 +81,10 @@ void Player::Step()
 		break;
 
 	case PLAYER_STATE_FALL:		// プレイヤーが落下しているなら
+<<<<<<< HEAD
 		PlayerMovement();		// プレイヤー移動処理
+=======
+>>>>>>> 52268e7eb202dcbe0d55d7d1a271112354b2e872
 		CheckPlayerLanding();	//プレイヤーが着地しているかチェック
 		break;
 
@@ -97,9 +102,13 @@ void Player::Step()
 void Player::Draw()
 {
 	// プレイヤーの描画
+<<<<<<< HEAD
 	//DrawLineBox(m_posX, m_posY, m_posX + PLAYER_SIZE, m_posY + PLAYER_SIZE, GetColor(255, 255, 255));
 	DrawRotaGraph(m_posX, m_posY, 1.0f, m_Rot, m_ImageHandle, true);
 	DrawFormatString(0, 80, GetColor(255, 255, 255), "%d", state);
+=======
+	DrawBox(m_posX, m_posY, m_posX + PLAYER_SIZE, m_posY + PLAYER_SIZE, GetColor(255, 255, 255), true);
+>>>>>>> 52268e7eb202dcbe0d55d7d1a271112354b2e872
 }
 
 //終了処理
@@ -117,8 +126,12 @@ void Player::Control()
 	//ジャンプ処理
 	if (IsKeyPush(KEY_INPUT_SPACE))
 	{
-		//ジャンプ状態に設定
-		state = PLAYER_STATE_JUMP;
+		if (CanJumpPlayer())
+		{
+			//ジャンプ状態に設定
+			state = PLAYER_STATE_JUMP;
+
+		}
 	}
 }
 
@@ -190,22 +203,22 @@ bool Player::IsAirPlayer()
 }
 
 //天井処理
-void Player::PlayerCeiling()
-{
-	//ｙの移動量をリセット
-	m_move_y = 0.0f;
-
-	if (IsAirPlayer())
-	{
-		//プレイヤー落下状態に変更
-		state = PLAYER_STATE_FALL;
-	}
-}
+//void Player::PlayerCeiling()
+//{
+//	//ｙの移動量をリセット
+//	m_move_y = 0.0f;
+//
+//	if (IsAirPlayer())
+//	{
+//		//プレイヤー落下状態に変更
+//		state = PLAYER_STATE_FALL;
+//	}
+//}
 
 // 重力計算処理
 void Player::CalcGravity()
 {
-	m_move_y += GRAVITY;
+	m_move_y -= GRAVITY;
 }
 
 // プレイヤー回転処理
@@ -227,8 +240,8 @@ void Player::PlayerMovement()
 //プレイヤーが落下しているかチェック
 void Player::CheckPlayerMidAir()
 {
-	// もしYの速度がプラスなら落下している
-	if (m_move_y > 0) {
+	// もしYの速度がマイナスなら落下している
+	if (m_move_y < 0) {
 		//プレイヤー落下状態に変更
 		state = PLAYER_STATE_FALL;
 	}
@@ -237,7 +250,7 @@ void Player::CheckPlayerMidAir()
 //プレイヤーが着地しているかチェック
 void Player::CheckPlayerLanding()
 {
-	if (m_nextPosY > WINDOW_HEIGHT - PLAYER_SIZE - 120) {
+	if (m_nextPosY > WINDOW_HEIGHT - PLAYER_SIZE) {
 		// 着地判定に
 		state = PLAYER_STATE_LANDING;
 	}
@@ -246,7 +259,7 @@ void Player::CheckPlayerLanding()
 // ジャンプ処理
 void Player::StepJump()
 {
-	m_move_y = -PLAYER_JUMP_POWER;	// 初期値を入れる
+	m_move_y = PLAYER_JUMP_POWER;	// 初期値を入れる
 	state = PLAYER_STATE_MIDAIR;	// 空中にいることにする
 }
 

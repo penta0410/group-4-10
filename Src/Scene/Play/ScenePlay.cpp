@@ -63,9 +63,6 @@ void Play::Step()
 		//マップ通常処理
 		c_map.Step();
 
-		// プレイヤー通常処理
-		c_player.Step();
-
 		//背景スクロール処理
 		BGScroll();
 
@@ -94,9 +91,6 @@ void Play::Draw()
 	//マップ描画
 	c_map.Draw();
 	
-	//プレイヤー描画
-	c_player.Draw();
-
 	//デバッグ
 
 }
@@ -183,7 +177,7 @@ void Play::MapCollision(int mapmove)
 								int overlap = By + Bh - Ay;
 								c_player.SetNextPosY(Ay + overlap);
 
-								//天井についたら押し返す
+								////天井についたら押し返す
 								//c_player.PlayerCeiling();
 
 							}
@@ -193,8 +187,8 @@ void Play::MapCollision(int mapmove)
 								int overlap = Ay + Ah - By;
 								c_player.SetNextPosY(Ay - overlap);
 
-								//落下したら
-								c_player.PlayerLanding();
+								////落下したら
+								//c_player.PlayerLanding();
 
 							}
 						}
