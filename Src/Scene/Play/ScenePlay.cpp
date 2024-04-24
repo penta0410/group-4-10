@@ -54,10 +54,13 @@ void Play::Step()
 {	
 	
 	//プレイヤーが生きている時だけ処理を行う死んだらストップ
-	if (c_player.DeathPlayer() == false)
+	//if (c_player.DeathPlayer() == false)
 	{
 		//マップ通常処理
 		c_map.Step();
+
+		// プレイヤー通常処理
+		c_player.Step();
 
 		//背景スクロール処理
 		BGScroll();
@@ -87,6 +90,9 @@ void Play::Draw()
 	//マップ描画
 	c_map.Draw();
 	
+	//プレイヤー描画
+	c_player.Draw();
+
 	//デバッグ
 
 }
@@ -174,7 +180,7 @@ void Play::MapCollision(int mapmove)
 								c_player.SetNextPosY(Ay + overlap);
 
 								//天井についたら押し返す
-								c_player.PlayerCeiling();
+								//c_player.PlayerCeiling();
 
 							}
 							//下方向の修正
