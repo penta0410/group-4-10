@@ -53,7 +53,7 @@ void Player::Load()
 void Player::DefaultValue()
 {
 	//座標
-	m_posX = PLAYER_SIZE / 2;	//X座標
+	m_posX = PLAYER_SIZE * 3 / 2;	//X座標
 	m_posY = PLAYER_SIZE / 2;	//Y座標
 	m_nextPosX = m_posX;		//移動後のX座標
 	m_nextPosY = m_posY;		//移動後のY座標
@@ -64,8 +64,6 @@ void Player::DefaultValue()
 //通常処理
 void Player::Step()
 {
-	//プレイヤーがジャンプ可能かどうか
-	if(CanJumpPlayer())
 	switch (state) {
 	case PLAYER_STATE_RUN:	// プレイヤーが動いている最中なら
 		Control();			// 操作できる
@@ -82,15 +80,16 @@ void Player::Step()
 
 	case PLAYER_STATE_FALL:		// プレイヤーが落下しているなら
 		PlayerMovement();		// プレイヤー移動処理
-		CheckPlayerLanding();	//プレイヤーが着地しているかチェック
+		CheckPlayerLanding();	// プレイヤーが着地しているかチェック
 		break;
 
 	case PLAYER_STATE_LANDING:	// プレイヤーが着地したなら
-		PlayerLanding();		//着地処理
+		PlayerLanding();		// 着地処理
 		break;
 	}
 
 	m_nextPosY += m_move_y;
+
 	// 座標更新
 	UpdatePos();
 }
@@ -100,7 +99,7 @@ void Player::Draw()
 {
 	// プレイヤーの描画
 	DrawRotaGraph(m_posX, m_posY, 1.0f, m_Rot, m_ImageHandle, true);
-	DrawFormatString(0, 80, GetColor(255, 255, 255), "%d", state);
+	DrawFormatString(0, 80, GetColor(255, 255, 255), "%f", m_Rot);
 }
 
 //終了処理
@@ -122,7 +121,6 @@ void Player::Control()
 		{
 			//ジャンプ状態に設定
 			state = PLAYER_STATE_JUMP;
-
 		}
 	}
 }
@@ -210,7 +208,7 @@ bool Player::IsAirPlayer()
 // 重力計算処理
 void Player::CalcGravity()
 {
-	m_move_y -= GRAVITY;
+	m_move_y += GRAVITY;
 }
 
 // プレイヤー回転処理
@@ -232,8 +230,8 @@ void Player::PlayerMovement()
 //プレイヤーが落下しているかチェック
 void Player::CheckPlayerMidAir()
 {
-	// もしYの速度がマイナスなら落下している
-	if (m_move_y < 0) {
+	// もしYの速度がプラスなら落下している
+	if (m_move_y > 0) {
 		//プレイヤー落下状態に変更
 		state = PLAYER_STATE_FALL;
 	}
@@ -242,7 +240,11 @@ void Player::CheckPlayerMidAir()
 //プレイヤーが着地しているかチェック
 void Player::CheckPlayerLanding()
 {
-	if (m_nextPosY > WINDOW_HEIGHT - PLAYER_SIZE) {
+	if (m_nextPosY > WINDOW_HEIGHT - PLAYER_SIZE * 3 / 2) {
+		m_nextPosY = WINDOW_HEIGHT - PLAYER_SIZE * 3 / 2;
+		float n = m_Rot * 180 / DX_PI * 180;
+		m_Rot = 0.0f;
+
 		// 着地判定に
 		state = PLAYER_STATE_LANDING;
 	}
@@ -251,7 +253,7 @@ void Player::CheckPlayerLanding()
 // ジャンプ処理
 void Player::StepJump()
 {
-	m_move_y = PLAYER_JUMP_POWER;	// 初期値を入れる
+	m_move_y = -PLAYER_JUMP_POWER;	// 初期値を入れる
 	state = PLAYER_STATE_MIDAIR;	// 空中にいることにする
 }
 
