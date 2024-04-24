@@ -92,7 +92,7 @@ void Play::Draw()
 	c_map.Draw();
 	
 	//デバッグ
-
+	
 }
 
 //後処理
