@@ -10,10 +10,6 @@ void Map::Init() {
 	// 画像の読み込み
 	imgHundle[MAPCHIP_BLOCK] = LoadGraph("Data/Play/図1.png");		//土ブロック
 	imgHundle[MAPCHIP_KUSA] = LoadGraph("Data/Play/図2.png");		//草ブロック
-	imgHundle[MAPCHIP_HATENA] = LoadGraph("Data/Play/図4.png");	//ハテナブロック
-	imgHundle[MAPCHIP_HATENA_2] = LoadGraph("Data/Play/図5.png");		//はてなブロック（使用済み)
-	imgHundle[MAPCHIP_KAGI] = LoadGraph("Data/Play/図11.png");		//鍵
-	imgHundle[MAPCHIP_KAGIBLOCK] = LoadGraph("Data/Play/図10.png");	//鍵ブロック
 	imgHundle[MAPCHIP_HAKO] = LoadGraph("Data/Play/図51.png");	//木箱
 	imgHundle[MAPCHIP_COIN] = LoadGraph("Data/Play/coin.png");	//コイン
 	imgHundle[MAPCHIP_TRAP] = LoadGraph("Data/Play/Trap.png");	//トラップ
@@ -48,16 +44,16 @@ void Map::Draw(int mapmove) {
 				int mapchipType = m_FileReadMapData[y][x];
 				if (m_FileReadMapData[y][x] != MAPCHIP_NONE) {
 					move = x * MAP_SIZE - mapmove;
-					if (m_FileReadMapData[y][x] != 7)
+					if (m_FileReadMapData[y][x] != MAPCHIP_COIN)
 					{
-						if (m_FileReadMapData[y][x] != 9)
+						if (m_FileReadMapData[y][x] != MAPCHIP_TRAP)
 						{
 							DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
 						}
 					}
 
 					//コイン
-					if (m_FileReadMapData[y][x] == 7)
+					if (m_FileReadMapData[y][x] == MAPCHIP_COIN)
 					{
 						DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
 					}
