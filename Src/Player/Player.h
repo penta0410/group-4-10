@@ -8,20 +8,9 @@
 #include "../Enemy/Enemy.h"
 
 const int PLAYER_IMAGE_NUM = 12;										//画像の配列の数
-const int GRAVITY = 1.0;
+const float GRAVITY = 1.0f;
 const int PLAYER_SIZE = 60;
-
-//プレイヤーアニメーション種類
-enum PlayerAnimationType {
-
-	PLAYER_ANIMATION_TYPE_RUN = 0,
-	PLAYER_ANIMATION_TYPE_JUMP,
-	PLAYER_ANIMATION_TYPE_MIDAIR,
-	PLAYER_ANIMATION_TYPE_FALL,
-	PLAYER_ANIMATION_TYPE_LANDING,
-	
-	PLAYER_ANIMATION_TYPE_MAX,
-};
+const float PLAYER_JUMP_POWER = 20.0f;
 
 //プレイヤーのアニメーションの状態
 enum PlayerState {
@@ -59,9 +48,6 @@ private:
 	//画像ハンドル
 	int m_ImageHandle[PLAYER_IMAGE_NUM];
 
-	//プレイヤーのHP
-	int m_HP;
-
 	//プレイヤー移動フラグ
 	int m_PlayerMoveFlag;
 
@@ -75,6 +61,9 @@ private:
 	//プレイヤー無敵フラグ
 	bool PlayerInviFlag;
 
+	//プレイヤー死亡確認フラグ
+	bool isDeath;
+
 	//プレイヤー無敵フレーム
 	int PlayerInviFlame;
 
@@ -84,9 +73,6 @@ private:
 	int m_AnimationFreamCnt = 0;
 
 	int m_Animation_Num = 0;
-
-	//プレイヤーアニメーション種類
-	PlayerAnimationType now_animation;
 
 	//プレイヤーアニメ－ション状態
 	PlayerState state;
@@ -103,10 +89,10 @@ public:
 	void DefaultValue();
 
 	//通常処理
-	void Step(int flag);
+	void Step();
 
 	//描画処理
-	void Draw(int flag);
+	void Draw();
 
 	//終了処理
 	void Fin();
@@ -116,11 +102,9 @@ public:
 
 	//アニメーション
 	void Animation();
-
-	//Hp取得
-	int GetHp() { return m_HP; }
-	//Hｐセット
-	void SetHp(int hp);
+	
+	// 死亡確認用
+	bool GetisDeath() { return isDeath; }
 
 	//座標取得
 	float GetPosX() { return m_posX; }		//X座標
@@ -142,15 +126,21 @@ public:
 	void GetMoveDirection(bool* _dirArray);
 
 	//プレイヤー天井処理
-	void PlayerCeiling();
+	//void PlayerCeiling();
 
-	//プレイヤー落下前チェック
-	void StepPlayerMidAir();
+	// 重力計算処理
+	void CalcGravity();
 
-	//プレイヤー落下更新
-	void StepPlayerFall();
+	//プレイヤーが落下しているかチェック
+	void CheckPlayerMidAir();
 
-	//プレイヤー着地処理
+	//プレイヤーが着地しているかチェック
+	void CheckPlayerLanding();
+	
+	// ジャンプ処理
+	void StepJump();
+
+	//着地処理
 	void PlayerLanding();
 
 	//プレイヤーがジャンプ可能かどうか
@@ -158,24 +148,4 @@ public:
 
 	//プレイヤーが空中状態かどうか
 	bool IsAirPlayer();
-
-	//プレイヤー無敵かどうか
-	bool PlayerInvincible();
-
-	//Hp描画
-	void DrawHp();
-
-	//プレイヤー死亡したかどうか
-	bool DeathPlayer();
-
-	//プレイヤー回復処理
-	void PlayerHeal();
-
-	//プレイヤー無敵処理
-	void StepInvincible();
 };
-
-
-
-
-
