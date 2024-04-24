@@ -81,10 +81,7 @@ void Player::Step()
 		break;
 
 	case PLAYER_STATE_FALL:		// プレイヤーが落下しているなら
-<<<<<<< HEAD
 		PlayerMovement();		// プレイヤー移動処理
-=======
->>>>>>> 52268e7eb202dcbe0d55d7d1a271112354b2e872
 		CheckPlayerLanding();	//プレイヤーが着地しているかチェック
 		break;
 
@@ -102,13 +99,8 @@ void Player::Step()
 void Player::Draw()
 {
 	// プレイヤーの描画
-<<<<<<< HEAD
-	//DrawLineBox(m_posX, m_posY, m_posX + PLAYER_SIZE, m_posY + PLAYER_SIZE, GetColor(255, 255, 255));
 	DrawRotaGraph(m_posX, m_posY, 1.0f, m_Rot, m_ImageHandle, true);
 	DrawFormatString(0, 80, GetColor(255, 255, 255), "%d", state);
-=======
-	DrawBox(m_posX, m_posY, m_posX + PLAYER_SIZE, m_posY + PLAYER_SIZE, GetColor(255, 255, 255), true);
->>>>>>> 52268e7eb202dcbe0d55d7d1a271112354b2e872
 }
 
 //終了処理
