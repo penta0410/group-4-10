@@ -1,5 +1,4 @@
 #pragma once
-
 #include "DxLib.h"
 #include "../Input/Input.h"
 #include "../Screen/Screen.h"

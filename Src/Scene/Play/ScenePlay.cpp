@@ -54,7 +54,7 @@ void Play::Step()
 {	
 	
 	//プレイヤーが生きている時だけ処理を行う死んだらストップ
-	if (c_player.DeathPlayer() == false)
+	//if (c_player.DeathPlayer() == false)
 	{
 		//マップ通常処理
 		c_map.Step();
@@ -173,8 +173,8 @@ void Play::MapCollision(int mapmove)
 								int overlap = By + Bh - Ay;
 								c_player.SetNextPosY(Ay + overlap);
 
-								//天井についたら押し返す
-								c_player.PlayerCeiling();
+								////天井についたら押し返す
+								//c_player.PlayerCeiling();
 
 							}
 							//下方向の修正
@@ -183,8 +183,8 @@ void Play::MapCollision(int mapmove)
 								int overlap = Ay + Ah - By;
 								c_player.SetNextPosY(Ay - overlap);
 
-								//落下したら
-								c_player.PlayerLanding();
+								////落下したら
+								//c_player.PlayerLanding();
 
 							}
 						}
