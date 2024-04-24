@@ -63,6 +63,9 @@ void Play::Step()
 		//マップ通常処理
 		c_map.Step();
 
+		// プレイヤー通常処理
+		c_player.Step();
+
 		//背景スクロール処理
 		BGScroll();
 
@@ -90,6 +93,9 @@ void Play::Draw()
 
 	//マップ描画
 	c_map.Draw();
+	
+	// プレイヤーの描画
+	c_player.Draw();
 	
 	//デバッグ
 	
