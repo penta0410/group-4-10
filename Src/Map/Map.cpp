@@ -18,22 +18,15 @@ void Map::Init() {
 	ReadFile();
 	isReadFile = true;
 	
+	//マップ移動量
+	m_Map_Move_x = 0;
+
 	//ファイル１読み込み終了フラグ
 	ReadFileFlag_1 = 0;
 	
-	//マップチップ描画フラグ
-	DrawFlag_1 = 0;
-
-	//初期化
-	for (int coin_num = 0; coin_num < COIN_NUM; coin_num++)
-	{
-		CoinFlag[coin_num] = 1;
-	}
-
-	increase = 1;
 }
 
-void Map::Draw(int mapmove) {
+void Map::Draw() {
 
 	for (int y = 0; y < MAP_DATA_Y; y++)
 	{
@@ -43,12 +36,19 @@ void Map::Draw(int mapmove) {
 			if (isReadFile) {
 				int mapchipType = m_FileReadMapData[y][x];
 				if (m_FileReadMapData[y][x] != MAPCHIP_NONE) {
-					move = x * MAP_SIZE - mapmove;
+
+					//マップスクロール
+					move = x * MAP_SIZE - m_Map_Move_x;
+
+					//あたったら描画しないものを除いて描画
 					if (m_FileReadMapData[y][x] != MAPCHIP_COIN)
 					{
 						if (m_FileReadMapData[y][x] != MAPCHIP_TRAP)
 						{
-							DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
+							if (m_FileReadMapData[y][x] != MAPCHIP_HEART)
+							{
+								DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
+							}
 						}
 					}
 
@@ -57,15 +57,19 @@ void Map::Draw(int mapmove) {
 					{
 						DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
 					}
-					
+
 					//ハート
-					for (int heart_num = 0; heart_num < COIN_NUM; heart_num++)
+					if (m_FileReadMapData[y][x] == MAPCHIP_HEART)
 					{
-						if (m_FileReadMapData[y][x] == 9)
-						{
-							DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
-						}
+						DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
 					}
+
+					//トラップ
+					if (m_FileReadMapData[y][x] == MAPCHIP_TRAP)
+					{
+						DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
+					}
+
 				}
 			}
 		}
@@ -75,7 +79,8 @@ void Map::Draw(int mapmove) {
 //通常処理
 void Map::Step()
 {
-
+	//マップ移動
+	m_Map_Move_x += MAP_SPEED;
 }
 
 //コイン通常処理

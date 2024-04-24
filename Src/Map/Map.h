@@ -12,8 +12,8 @@ const int MAP_SIZE = 56;
 //トラップダメージ
 const int TRAP_DAMAGE = 10;
 
-//コイン枚数
-const int COIN_NUM = 300;
+//マップスピード
+const int MAP_SPEED = 4;
 
 // マップチップ画像一覧
 enum MapChipType {
@@ -42,12 +42,8 @@ private:
 
 	int move = 0;
 
-	int move_2 = 0;
-
-	int increase = 0;
-
-	//コイン描画フラグ
-	int CoinFlag[COIN_NUM];
+	//マップ移動量
+	int m_Map_Move_x;
 
 public:
 	Map();
@@ -56,18 +52,11 @@ public:
 	//ファイル読み込みフラグ
 	bool isReadFile;
 
-
 	//ファイルからのマップデータ
 	int m_FileReadMapData[MAP_DATA_Y][MAP_DATA_X] = { 0 };
 
-
 	//ファイル１読み込み終了フラグ
 	int ReadFileFlag_1 = 0;
-	
-
-	//マップチップ描画フラグ
-	int DrawFlag_1 = 0;
-	
 	
 	//初期化
 	void Init();
@@ -76,7 +65,7 @@ public:
 	void Step();
 
 	//描画
-	void Draw(int mapmove);
+	void Draw();
 
 	//ファイルからの読み込み
 	void ReadFile();
