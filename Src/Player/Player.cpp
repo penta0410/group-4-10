@@ -29,30 +29,41 @@ void Player::Init()
 	PlayerInviFlag = false;
 
 	//プレイヤー無敵フレーム
-    PlayerInviFlame = 0;
+	PlayerInviFlame = 0;
 
 	//プレイヤー透過処理
 	m_alpha = 0;
 
+	//プレイヤーアニメ－ション状態
+	state = PLAYER_STATE_RUN;
 }
 
 //読み込み処理
 void Player::Load()
 {
-	
+
 }
 
 //初期値設定処理
 void Player::DefaultValue()
 {
-	
+	//座標
+	m_posX = 0;				//X座標
+	m_posY = 0;				//Y座標
+	m_nextPosX = m_posX;	//移動後のX座標
+	m_nextPosY = m_posY;	//移動後のY座標
+	old_pos_x = m_posX;		//移動前のX座標
+	old_pos_y = m_posY;		//移動前のY座標
 }
 
 //通常処理
 void Player::Step(int flag)
 {
-	
-	
+	if (state == PLAYER_STATE_RUN) {
+	}
+	else if(state == PLAYER_STATE_JUMP){
+
+	}
 }
 
 //描画処理
@@ -149,7 +160,6 @@ bool Player::IsAirPlayer()
 	case PLAYER_STATE_JUMP:
 	case PLAYER_STATE_FALL:
 		return true;
-
 	}
 
 	return false;
@@ -226,7 +236,6 @@ bool Player::CanJumpPlayer()
 	case PLAYER_STATE_MIDAIR:
 	case PLAYER_STATE_FALL:
 		return false;
-
 	}
 
 	return true;
@@ -270,12 +279,7 @@ bool Player::PlayerInvincible()
 //Hp描画
 void Player::DrawHp()
 {
-	DrawBox(m_posX - 13, m_posY - 33, m_posX + 53, m_posY - 30, GetColor(255, 255, 255), true);
-	DrawBox(m_posX - 10, m_posY - 30, m_posX + m_HP / 2 , m_posY - 20, GetColor(0, 255, 0), true);
-	DrawBox(m_posX - 13, m_posY - 20, m_posX + 53, m_posY - 17, GetColor(255, 255, 255), true);
-	DrawBox(m_posX - 13, m_posY - 33, m_posX - 10, m_posY - 17, GetColor(255, 255, 255), true);
-	DrawBox(m_posX + 50, m_posY - 33, m_posX + 53, m_posY - 17, GetColor(255, 255, 255), true);
-
+	DrawBox(m_posX, m_posY, m_posX + PLAYER_SIZE, m_posY + PLAYER_SIZE, GetColor(255, 255, 255), true);
 }
 
 //プレイヤー死亡処理
