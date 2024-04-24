@@ -9,6 +9,7 @@
 
 const int PLAYER_IMAGE_NUM = 12;										//画像の配列の数
 const int GRAVITY = 1.0;
+const int PLAYER_SIZE = 60;
 
 //プレイヤーアニメーション種類
 enum PlayerAnimationType {
