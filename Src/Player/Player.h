@@ -11,6 +11,8 @@ const int PLAYER_IMAGE_NUM = 12;										//画像の配列の数
 const float GRAVITY = 1.0f;
 const int PLAYER_SIZE = 60;
 const float PLAYER_JUMP_POWER = 20.0f;
+const char PLAYER_PATH[] = { "Data/Play/図4.png" };
+const float ROTAITION_SPEED = 0.1f;
 
 //プレイヤーのアニメーションの状態
 enum PlayerState {
@@ -45,8 +47,11 @@ private:
 	float m_move_x;
 	float m_move_y;
 
+	// プレイヤー回転値
+	float m_Rot;
+
 	//画像ハンドル
-	int m_ImageHandle[PLAYER_IMAGE_NUM];
+	int m_ImageHandle;
 
 	//プレイヤー移動フラグ
 	int m_PlayerMoveFlag;
@@ -130,6 +135,12 @@ public:
 
 	// 重力計算処理
 	void CalcGravity();
+
+	// プレイヤー回転処理
+	void PlayerRotation();
+
+	// プレイヤー移動処理
+	void PlayerMovement();
 
 	//プレイヤーが落下しているかチェック
 	void CheckPlayerMidAir();

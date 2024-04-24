@@ -21,8 +21,11 @@ void Player::Init()
 	m_move_x = 0;		//X移動量
 	m_move_y = 0;		//Y移動量
 
+	// 回転値
+	m_Rot = 0.0f;
+
 	//画像ハンドル
-	memset(m_ImageHandle, -1, sizeof(m_ImageHandle));
+	memset(&m_ImageHandle, -1, sizeof(m_ImageHandle));
 
 	//プレイヤー無敵フラグ
 	PlayerInviFlag = false;
@@ -43,19 +46,19 @@ void Player::Init()
 //読み込み処理
 void Player::Load()
 {
-
+	m_ImageHandle = LoadGraph(PLAYER_PATH);
 }
 
 //初期値設定処理
 void Player::DefaultValue()
 {
 	//座標
-	m_posX = 0;				//X座標
-	m_posY = 0;				//Y座標
-	m_nextPosX = m_posX;	//移動後のX座標
-	m_nextPosY = m_posY;	//移動後のY座標
-	old_pos_x = m_posX;		//移動前のX座標
-	old_pos_y = m_posY;		//移動前のY座標
+	m_posX = PLAYER_SIZE / 2;	//X座標
+	m_posY = PLAYER_SIZE / 2;	//Y座標
+	m_nextPosX = m_posX;		//移動後のX座標
+	m_nextPosY = m_posY;		//移動後のY座標
+	old_pos_x = m_posX;			//移動前のX座標
+	old_pos_y = m_posY;			//移動前のY座標
 }
 
 //通常処理
@@ -71,12 +74,12 @@ void Player::Step()
 		break;
 
 	case PLAYER_STATE_MIDAIR:	// プレイヤーが空中にいるなら
-		CalcGravity();			// 重力計算処理
+		PlayerMovement();		// プレイヤー移動処理
 		CheckPlayerMidAir();	// プレイヤーが落下しているかチェック
 		break;
 
 	case PLAYER_STATE_FALL:		// プレイヤーが落下しているなら
-		CalcGravity();			// 重力計算処理
+		PlayerMovement();		// プレイヤー移動処理
 		CheckPlayerLanding();	//プレイヤーが着地しているかチェック
 		break;
 
@@ -94,7 +97,8 @@ void Player::Step()
 void Player::Draw()
 {
 	// プレイヤーの描画
-	DrawLineBox(m_posX, m_posY, m_posX + PLAYER_SIZE, m_posY + PLAYER_SIZE, GetColor(255, 255, 255));
+	//DrawLineBox(m_posX, m_posY, m_posX + PLAYER_SIZE, m_posY + PLAYER_SIZE, GetColor(255, 255, 255));
+	DrawRotaGraph(m_posX, m_posY, 1.0f, m_Rot, m_ImageHandle, true);
 	DrawFormatString(0, 80, GetColor(255, 255, 255), "%d", state);
 }
 
@@ -204,6 +208,22 @@ void Player::CalcGravity()
 	m_move_y += GRAVITY;
 }
 
+// プレイヤー回転処理
+void Player::PlayerRotation()
+{
+	m_Rot += ROTAITION_SPEED * 180 / DX_PI;
+}
+
+// プレイヤー移動処理
+void Player::PlayerMovement()
+{
+	// 重力計算処理
+	CalcGravity();
+
+	// プレイヤー回転処理
+	PlayerRotation();
+}
+
 //プレイヤーが落下しているかチェック
 void Player::CheckPlayerMidAir()
 {
@@ -238,6 +258,7 @@ void Player::PlayerLanding()
 	//走っている状態に変更
 	state = PLAYER_STATE_RUN;
 }
+
 
 //座標を更新
 void Player::SetNextPosX(int _posX)

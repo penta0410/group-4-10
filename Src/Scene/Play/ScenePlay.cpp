@@ -13,6 +13,7 @@ void Play::Init()
 	c_map.Init();
 	//プレイヤー初期化
 	c_player.Init();
+	c_player.DefaultValue();
 
 	//背景座標
 	m_BG_x[0] = WINDOW_WIDTH / 2;		//背景１
@@ -47,6 +48,9 @@ void Play::Load()
 	{
 		m_ImageHandle[i] = LoadGraph(PLAY_PATH[i]);
 	}
+
+	// プレイヤーロード
+	c_player.Load();
 }
 
 //通常処理
