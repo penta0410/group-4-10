@@ -46,6 +46,7 @@ private:
 	int m_Map_Move_x;
 
 public:
+
 	Map();
 	~Map();
 
