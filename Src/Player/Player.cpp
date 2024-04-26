@@ -40,7 +40,7 @@ void Player::Init()
 	m_alpha = 0;
 
 	//プレイヤーアニメ－ション状態
-	state = PLAYER_STATE_MIDAIR;
+	state = PLAYER_STATE_RUN;
 }
 
 //読み込み処理
@@ -193,17 +193,17 @@ bool Player::IsAirPlayer()
 }
 
 //天井処理
-//void Player::PlayerCeiling()
-//{
-//	//ｙの移動量をリセット
-//	m_move_y = 0.0f;
-//
-//	if (IsAirPlayer())
-//	{
-//		//プレイヤー落下状態に変更
-//		state = PLAYER_STATE_FALL;
-//	}
-//}
+void Player::PlayerCeiling()
+{
+	//ｙの移動量をリセット
+	m_move_y = 0.0f;
+
+	if (IsAirPlayer())
+	{
+		//プレイヤー落下状態に変更
+		state = PLAYER_STATE_FALL;
+	}
+}
 
 // 重力計算処理
 void Player::CalcGravity()

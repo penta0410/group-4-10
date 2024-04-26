@@ -130,7 +130,7 @@ public:
 	void GetMoveDirection(bool* _dirArray);
 
 	//プレイヤー天井処理
-	//void PlayerCeiling();
+	void PlayerCeiling();
 
 	// 重力計算処理
 	void CalcGravity();
