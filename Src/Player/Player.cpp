@@ -102,7 +102,7 @@ void Player::Draw()
 
 
 	//デバッグ
-	//プレイヤー当たり判定
+	//プレイヤー当たり判定（真ん中が原点のため矯正）
 	DrawBox(m_posX - (PLAYER_SIZE / 2), m_posY - (PLAYER_SIZE / 2),
 		(m_posX - (PLAYER_SIZE / 2)) + PLAYER_SIZE,
 		(m_posY - (PLAYER_SIZE / 2)) + PLAYER_SIZE, GetColor(255, 255, 255), true);

@@ -38,36 +38,8 @@ void Map::Draw() {
 					//マップスクロール
 					move = x * MAP_SIZE - m_Map_Move_x;
 
-					//あたったら描画しないものを除いて描画
-					if (m_FileReadMapData[y][x] != MAPCHIP_COIN)
-					{
-						if (m_FileReadMapData[y][x] != MAPCHIP_TRAP)
-						{
-							if (m_FileReadMapData[y][x] != MAPCHIP_HEART)
-							{
-								DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
-							}
-						}
-					}
-
-					//コイン
-					if (m_FileReadMapData[y][x] == MAPCHIP_COIN)
-					{
-						DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
-					}
-
-					//ハート
-					if (m_FileReadMapData[y][x] == MAPCHIP_HEART)
-					{
-						DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
-					}
-
-					//トラップ
-					if (m_FileReadMapData[y][x] == MAPCHIP_TRAP)
-					{
-						DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
-					}
-
+					DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
+				
 				}
 			}
 		}
@@ -79,24 +51,10 @@ void Map::Step()
 {
 	//マップ移動
 	m_Map_Move_x += MAP_SPEED;
-}
 
-//コイン通常処理
-void Map::CoinStep(int x, int y)
-{
-	if (m_FileReadMapData[y][x] == 7)
-	{
-		m_FileReadMapData[y][x] = -1;
-	}
-}
+	//マップ到達度処理
+	MapReachLevel();
 
-//ハート通常処理
-void Map::HeartStep(int x, int y)
-{
-	if (m_FileReadMapData[y][x] == 9)
-	{
-		m_FileReadMapData[y][x] = -1;
-	}
 }
 
 // ファイルからの読み込み
@@ -130,9 +88,10 @@ void Map::ReadFile() {
 			mapIndexX = 0;
 		}
 	}
-
-
-
-	
 }
 
+//マップ到達度処理
+void Map::MapReachLevel()
+{
+
+}

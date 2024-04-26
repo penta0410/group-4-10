@@ -7,13 +7,16 @@ const int MAP_DATA_Y = 20;
 const int MAP_DATA_X = 1000;
 
 // マップサイズ
-const int MAP_SIZE = 56;
+const int MAP_SIZE = 60;
 
 //トラップダメージ
 const int TRAP_DAMAGE = 10;
 
 //マップスピード
 const int MAP_SPEED = 5;
+
+////マップゴール地点
+//const int MAP_COAL = ;
 
 // マップチップ画像一覧
 enum MapChipType {
@@ -69,11 +72,8 @@ public:
 	//ファイルからの読み込み
 	void ReadFile();
 
-	//コイン通常処理
-	void CoinStep(int x, int y);
+	//マップ到達度処理
+	void MapReachLevel();
 
-	//ハート通常処理
-	void HeartStep(int x, int y);
-	
 };
 

@@ -6,8 +6,7 @@
 #include "Input/Input.h"
 #include "Scene/SceneManager/SceneManager.h"
 
-//フレームレート情報変数
-FrameRateInfo frameRateInfo;
+FrameRateInfo frameRateInfo;			//フレームレート情報変数
 
 SceneManager c_scene_manager;			//シーンマネージャークラス宣言
 
@@ -83,12 +82,8 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		}//フレームレートのif文終わり
 
 	}//メインループの終わり
-	//最後に１回だけやる処理をここに書く
-	//DXライブラリの後処理
-	
 	//シーンマネージャー終了
 	c_scene_manager.FInScene();
-
 	DxLib_End();
 
 	return 0;
