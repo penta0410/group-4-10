@@ -80,7 +80,6 @@ void Player::Step()
 
 	case PLAYER_STATE_FALL:		// プレイヤーが落下しているなら
 		PlayerMovement();		// プレイヤー移動処理
-		CheckPlayerLanding();	// プレイヤーが着地しているかチェック
 		break;
 
 	case PLAYER_STATE_LANDING:	// プレイヤーが着地したなら
@@ -90,24 +89,21 @@ void Player::Step()
 
 	m_nextPosY += m_move_y;
 
-	// 座標更新
-	UpdatePos();
 }
 
 //描画処理
 void Player::Draw()
 {
 	// プレイヤーの描画
-	DrawRotaGraph(m_posX, m_posY, 1.0f, m_Rot, m_ImageHandle, true);
-
+	DrawRotaGraph(m_posX + (PLAYER_SIZE / 2), m_posY + (PLAYER_SIZE / 2), 1.0f, m_Rot, m_ImageHandle, true);
 
 	//デバッグ
 	//プレイヤー当たり判定（真ん中が原点のため矯正）
-	DrawBox(m_posX - (PLAYER_SIZE / 2), m_posY - (PLAYER_SIZE / 2),
-		(m_posX - (PLAYER_SIZE / 2)) + PLAYER_SIZE,
-		(m_posY - (PLAYER_SIZE / 2)) + PLAYER_SIZE, GetColor(255, 255, 255), true);
+	//DrawBox(m_posX - (PLAYER_SIZE / 2), m_posY - (PLAYER_SIZE / 2),
+	//	(m_posX - (PLAYER_SIZE / 2)) + PLAYER_SIZE,
+	//	(m_posY - (PLAYER_SIZE / 2)) + PLAYER_SIZE, GetColor(255, 255, 255), true);
 
-	//プレイヤー回転地
+	//プレイヤー回転値
 	DrawFormatString(0, 80, GetColor(255, 255, 255), "%f", m_Rot);
 
 }
@@ -247,19 +243,6 @@ void Player::CheckPlayerMidAir()
 	}
 }
 
-//プレイヤーが着地しているかチェック
-void Player::CheckPlayerLanding()
-{
-	if (m_nextPosY > WINDOW_HEIGHT - PLAYER_SIZE * 3 / 2) {
-		m_nextPosY = WINDOW_HEIGHT - PLAYER_SIZE * 3 / 2;
-		float n = m_Rot * 180 / DX_PI * 180;
-		m_Rot = 0.0f;
-
-		// 着地判定に
-		state = PLAYER_STATE_LANDING;
-	}
-}
-
 // ジャンプ処理
 void Player::StepJump()
 {
@@ -272,6 +255,9 @@ void Player::PlayerLanding()
 {
 	//ｙの移動量をリセット
 	m_move_y = 0.0f;
+	// 回転値も
+	m_Rot = 0.0f;
+	
 	//走っている状態に変更
 	state = PLAYER_STATE_RUN;
 }

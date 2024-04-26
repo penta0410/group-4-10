@@ -49,40 +49,40 @@ void Play::Load()
 //通常処理
 void Play::Step()
 {	
-	//マップ通常処理
-	c_map.Step();
+	////マップ通常処理
+	//c_map.Step();
 
-	// プレイヤー通常処理
-	c_player.Step();
+	//// プレイヤー通常処理
+	//c_player.Step();
 
-	//背景スクロール処理
-	BGScroll(BG_MOVE_SPEED);
+	////背景スクロール処理
+	//BGScroll(BG_MOVE_SPEED);
 
-	//マップ当たり判定
-	MapCollision(BGScroll(BG_MOVE_SPEED));
+	////マップ当たり判定
+	//MapCollision(BGScroll(BG_MOVE_SPEED));
 
-	////プレイヤーが生きている時だけ処理を行う死んだらストップ
-	//if (c_player.DeathPlayer() == false)
-	//{
-	//	//マップ通常処理
-	//	c_map.Step();
+	//プレイヤーが生きている時だけ処理を行う死んだらストップ
+	if (!c_player.DeathPlayer())
+	{
+		//マップ通常処理
+		c_map.Step();
 
-	//	// プレイヤー通常処理
-	//	c_player.Step();
+		// プレイヤー通常処理
+		c_player.Step();
 
-	//	//背景スクロール処理
-	//	BGScroll();
+		//背景スクロール処理
+		BGScroll(BG_MOVE_SPEED);
 
-	//	//マップ当たり判定
-	//	MapCollision(BGScroll());
-
-	//}
+		//マップ当たり判定
+		MapCollision(BGScroll(BG_MOVE_SPEED));
+	}
 	//シーンへの遷移
 	//エンター押されたなら
 	if (IsKeyPush(KEY_INPUT_RETURN))
 	{
-		
 		//後処理へ移動
+		//c_player.SetisDeath(true);
+
 		SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_FIN;
 	}
 	
@@ -111,8 +111,16 @@ void Play::Fin()
 	//プレイヤー終了処理
 	c_player.Fin();
 
-	//リザルトへ移動
-	SceneManager::g_CurrentSceneID = SCENE_ID::SCENE_ID_RESULT;
+	// もしプレイヤーが死んでいるなら
+	if (c_player.DeathPlayer())
+	{
+		//プレイへ移動
+		SceneManager::g_CurrentSceneID = SCENE_ID::SCENE_ID_PLAY;
+	}
+	else {// そうでないなら
+		//リザルトへ移動
+		SceneManager::g_CurrentSceneID = SCENE_ID::SCENE_ID_RESULT;
+	}
 }
 
 //背景スクロール処理
@@ -182,8 +190,11 @@ void Play::MapCollision(int mapmove)
 					c_player.SetNextPosY(Ay + overlap);
 
 					//天井についたら押し返す
-					c_player.PlayerCeiling();
-
+					//c_player.PlayerCeiling();
+					
+					//死んだことにして終了処理へ移動
+					c_player.SetisDeath(true);
+					SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_FIN;
 				}
 
 				//下方向の修正
@@ -237,6 +248,10 @@ void Play::MapCollision(int mapmove)
 					// めり込み量を計算する
 					int overlap = Bx + Bw - Ax;
 					c_player.SetNextPosX(Ax + overlap);
+
+					//死んだことにして終了処理へ移動
+					c_player.SetisDeath(true);
+					SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_FIN;
 				}
 
 				// 右方向の修正
@@ -244,8 +259,16 @@ void Play::MapCollision(int mapmove)
 					// めり込み量を計算する
 					int overlap = Ax + Aw - Bx;
 					c_player.SetNextPosX(Ax - overlap);
+
+					//死んだことにして終了処理へ移動
+					c_player.SetisDeath(true);
+					SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_FIN;
 				}
 			}
 		}
 	}
+
+	// 座標更新
+	c_player.UpdatePos();
+
 }

@@ -9,8 +9,8 @@
 const int PLAYER_IMAGE_NUM = 12;										//画像の配列の数
 const float GRAVITY = 1.2f;
 const int PLAYER_SIZE = 60;
-const float PLAYER_JUMP_POWER = 25.0f;
-const char PLAYER_PATH[] = { "Data/Play/プレイヤー.png" };
+const float PLAYER_JUMP_POWER = 20.0f;
+const char PLAYER_PATH[] = { "Data/Play/player.png" };
 const float ROTAITION_SPEED = 0.002f;
 
 //プレイヤーのアニメーションの状態
@@ -108,7 +108,10 @@ public:
 	void Animation();
 	
 	// 死亡確認用
-	bool GetisDeath() { return isDeath; }
+	bool DeathPlayer() { return isDeath; }
+
+	// 死亡フラグセット用
+	void SetisDeath(bool death) { isDeath = death; };
 
 	//座標取得
 	float GetPosX() { return m_posX; }		//X座標
@@ -144,9 +147,6 @@ public:
 	//プレイヤーが落下しているかチェック
 	void CheckPlayerMidAir();
 
-	//プレイヤーが着地しているかチェック
-	void CheckPlayerLanding();
-	
 	// ジャンプ処理
 	void StepJump();
 
