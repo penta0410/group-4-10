@@ -26,13 +26,6 @@ void Play::Init()
 
 
 
-
-
-
-
-
-
-
 	//用意した画像枚数だけ
 	for (int i = 0; i < PLAY_IMAGE_PATH_NUM; i++)
 	{
@@ -56,23 +49,34 @@ void Play::Load()
 //通常処理
 void Play::Step()
 {	
-	
-	//プレイヤーが生きている時だけ処理を行う死んだらストップ
+	//マップ通常処理
+	c_map.Step();
+
+	// プレイヤー通常処理
+	c_player.Step();
+
+	//背景スクロール処理
+	BGScroll(BG_MOVE_SPEED);
+
+	//マップ当たり判定
+	MapCollision(BGScroll(BG_MOVE_SPEED));
+
+	////プレイヤーが生きている時だけ処理を行う死んだらストップ
 	//if (c_player.DeathPlayer() == false)
-	{
-		//マップ通常処理
-		c_map.Step();
+	//{
+	//	//マップ通常処理
+	//	c_map.Step();
 
-		// プレイヤー通常処理
-		c_player.Step();
+	//	// プレイヤー通常処理
+	//	c_player.Step();
 
-		//背景スクロール処理
-		BGScroll();
+	//	//背景スクロール処理
+	//	BGScroll();
 
-		//マップ当たり判定
-		MapCollision(BGScroll());
+	//	//マップ当たり判定
+	//	MapCollision(BGScroll());
 
-	}
+	//}
 	//シーンへの遷移
 	//エンター押されたなら
 	if (IsKeyPush(KEY_INPUT_RETURN))
@@ -112,12 +116,12 @@ void Play::Fin()
 }
 
 //背景スクロール処理
-int Play::BGScroll()
+int Play::BGScroll(int move_speed)
 {
 	//背景スクロール処理
-	m_BG_x[0] -= BG_MOVE_SPEED;
-	m_BG_x[1] -= BG_MOVE_SPEED;
-	m_BG_move_x -= BG_MOVE_SPEED;
+	m_BG_x[0] -= move_speed;
+	m_BG_x[1] -= move_speed;
+	m_BG_move_x -= move_speed;
 
 	if (m_BG_x[0] <= -(WINDOW_WIDTH / 2))
 	{
@@ -153,52 +157,44 @@ void Play::MapCollision(int mapmove)
 
 			//矩形の当たり判定用のデータを準備
 			//プレイヤーの情報
-			int Ax = c_player.GetPosX() - 20;
-			int Ay = c_player.GetPosY() - 10;
+			int Ax = c_player.GetPosX();
+			int Ay = c_player.GetPosY();
 			int Aw = PLAYER_SIZE;
 			int Ah = PLAYER_SIZE;
 
 			//オブジェクトの情報
-			int Bx = mapIndexX * MAP_SIZE + 20 - mapmove;
+			int Bx = mapIndexX * MAP_SIZE - mapmove;
 			int By = mapIndexY * MAP_SIZE;
 			int Bw = MAP_SIZE;
-			int Bh = MAP_SIZE + 10;
+			int Bh = MAP_SIZE;
 
 			//Y方向のみに移動したと仮定した座標で当たり判定をチェックします
 			Ay = c_player.GetNextPosY();
 			Ax = c_player.GetNextPosX();
 
 			//当たっているかチェック
-			if (IsHitRect(Ax + mapmove, Ay, Aw, Ah, Bx + mapmove, By, Bw, Bh)) {
+			if (IsHitRect(Ax + mapmove, Ay, Aw, Ah, Bx + mapmove, By, Bw, Bh)) 
+			{
+				// 上方向の修正
+				if (dirArray[0]) {
+					// めり込み量を計算する
+					int overlap = By + Bh - Ay;
+					c_player.SetNextPosY(Ay + overlap);
 
-				if (c_map.m_FileReadMapData[mapIndexY][mapIndexX] != 7)
-				{
-					if (c_map.m_FileReadMapData[mapIndexY][mapIndexX] != 8)
-					{
-						if (c_map.m_FileReadMapData[mapIndexY][mapIndexX] != 9)
-						{
-							// 上方向の修正
-							if (dirArray[0]) {
-								// めり込み量を計算する
-								int overlap = By + Bh - Ay;
-								c_player.SetNextPosY(Ay + overlap);
+					//天井についたら押し返す
+					c_player.PlayerCeiling();
 
-								////天井についたら押し返す
-								//c_player.PlayerCeiling();
+				}
 
-							}
-							//下方向の修正
-							if (dirArray[1]) {
-								// めり込み量を計算する
-								int overlap = Ay + Ah - By;
-								c_player.SetNextPosY(Ay - overlap);
+				//下方向の修正
+				if (dirArray[1]) {
+					// めり込み量を計算する
+					int overlap = Ay + Ah - By;
+					c_player.SetNextPosY(Ay - overlap);
 
-								////落下したら
-								//c_player.PlayerLanding();
+					//落下したら
+					c_player.PlayerLanding();
 
-							}
-						}
-					}
 				}
 			}
 		}
@@ -218,45 +214,36 @@ void Play::MapCollision(int mapmove)
 			c_player.GetMoveDirection(dirArray);
 
 			//プレイヤーの情報
-			int Ax = c_player.GetPosX() - 20;
-			int Ay = c_player.GetPosY() - 10;
+			int Ax = c_player.GetPosX();
+			int Ay = c_player.GetPosY();
 			int Aw = PLAYER_SIZE;
 			int Ah = PLAYER_SIZE;
 
 			//オブジェクトの情報
-			int Bx = mapIndexX * MAP_SIZE + 20 - mapmove;
+			int Bx = mapIndexX * MAP_SIZE - mapmove;
 			int By = mapIndexY * MAP_SIZE;
 			int Bw = MAP_SIZE;
-			int Bh = MAP_SIZE + 10;
+			int Bh = MAP_SIZE;
 
 			//X方向のみに移動したと仮定した座標で当たり判定をチェック
 			Ay = c_player.GetNextPosY();
 			Ax = c_player.GetNextPosX();
 
 			// 当たっているかチェック
-			if (IsHitRect(Ax, Ay, Aw, Ah, Bx, By, Bw, Bh)) {
+			if (IsHitRect(Ax, Ay, Aw, Ah, Bx, By, Bw, Bh)) 
+			{
+				// 左方向の修正
+				if (dirArray[2]) {
+					// めり込み量を計算する
+					int overlap = Bx + Bw - Ax;
+					c_player.SetNextPosX(Ax + overlap);
+				}
 
-				if (c_map.m_FileReadMapData[mapIndexY][mapIndexX] != 7)
-				{
-					if (c_map.m_FileReadMapData[mapIndexY][mapIndexX] != 8)
-					{
-						if (c_map.m_FileReadMapData[mapIndexY][mapIndexX] != 9)
-						{
-							// 左方向の修正
-							if (dirArray[2]) {
-								// めり込み量を計算する
-								int overlap = Bx + Bw - Ax;
-								c_player.SetNextPosX(Ax + overlap);
-							}
-
-							// 右方向の修正
-							if (dirArray[3]) {
-								// めり込み量を計算する
-								int overlap = Ax + Aw - Bx;
-								c_player.SetNextPosX(Ax - overlap);
-							}
-						}
-					}
+				// 右方向の修正
+				if (dirArray[3]) {
+					// めり込み量を計算する
+					int overlap = Ax + Aw - Bx;
+					c_player.SetNextPosX(Ax - overlap);
 				}
 			}
 		}

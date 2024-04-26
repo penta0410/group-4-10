@@ -13,15 +13,13 @@ const int MAP_SIZE = 56;
 const int TRAP_DAMAGE = 10;
 
 //マップスピード
-const int MAP_SPEED = 4;
+const int MAP_SPEED = 5;
 
 // マップチップ画像一覧
 enum MapChipType {
 	MAPCHIP_NONE = -1,
 
 	MAPCHIP_BLOCK,
-	MAPCHIP_KUSA,
-	MAPCHIP_HAKO,
 	MAPCHIP_COIN,
 	MAPCHIP_TRAP,
 	MAPCHIP_HEART,

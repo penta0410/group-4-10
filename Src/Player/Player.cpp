@@ -40,7 +40,7 @@ void Player::Init()
 	m_alpha = 0;
 
 	//プレイヤーアニメ－ション状態
-	state = PLAYER_STATE_RUN;
+	state = PLAYER_STATE_MIDAIR;
 }
 
 //読み込み処理
@@ -53,7 +53,7 @@ void Player::Load()
 void Player::DefaultValue()
 {
 	//座標
-	m_posX = PLAYER_SIZE * 3 / 2;	//X座標
+	m_posX = PLAYER_SIZE * 6;	//X座標
 	m_posY = PLAYER_SIZE / 2;	//Y座標
 	m_nextPosX = m_posX;		//移動後のX座標
 	m_nextPosY = m_posY;		//移動後のY座標
@@ -99,7 +99,17 @@ void Player::Draw()
 {
 	// プレイヤーの描画
 	DrawRotaGraph(m_posX, m_posY, 1.0f, m_Rot, m_ImageHandle, true);
+
+
+	//デバッグ
+	//プレイヤー当たり判定
+	DrawBox(m_posX - (PLAYER_SIZE / 2), m_posY - (PLAYER_SIZE / 2),
+		(m_posX - (PLAYER_SIZE / 2)) + PLAYER_SIZE,
+		(m_posY - (PLAYER_SIZE / 2)) + PLAYER_SIZE, GetColor(255, 255, 255), true);
+
+	//プレイヤー回転地
 	DrawFormatString(0, 80, GetColor(255, 255, 255), "%f", m_Rot);
+
 }
 
 //終了処理

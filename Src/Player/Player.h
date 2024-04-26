@@ -7,10 +7,10 @@
 #include "../Enemy/Enemy.h"
 
 const int PLAYER_IMAGE_NUM = 12;										//画像の配列の数
-const float GRAVITY = 1.0f;
+const float GRAVITY = 1.2f;
 const int PLAYER_SIZE = 60;
-const float PLAYER_JUMP_POWER = 20.0f;
-const char PLAYER_PATH[] = { "Data/Play/図2.png" };
+const float PLAYER_JUMP_POWER = 25.0f;
+const char PLAYER_PATH[] = { "Data/Play/プレイヤー.png" };
 const float ROTAITION_SPEED = 0.002f;
 
 //プレイヤーのアニメーションの状態

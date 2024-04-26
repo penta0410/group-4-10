@@ -8,11 +8,9 @@ Map::~Map() {}
 
 void Map::Init() {
 	// 画像の読み込み
-	imgHundle[MAPCHIP_BLOCK] = LoadGraph("Data/Play/図1.png");		//土ブロック
-	imgHundle[MAPCHIP_KUSA] = LoadGraph("Data/Play/図2.png");		//草ブロック
-	imgHundle[MAPCHIP_HAKO] = LoadGraph("Data/Play/図51.png");	//木箱
+	imgHundle[MAPCHIP_BLOCK] = LoadGraph("Data/Play/ブロック.png");		//ブロック
 	imgHundle[MAPCHIP_COIN] = LoadGraph("Data/Play/coin.png");	//コイン
-	imgHundle[MAPCHIP_TRAP] = LoadGraph("Data/Play/Trap.png");	//トラップ
+	imgHundle[MAPCHIP_TRAP] = LoadGraph("Data/Play/トゲ.png");	//トラップ
 	imgHundle[MAPCHIP_HEART] = LoadGraph("Data/Play/heart.png");	//ハート
 
 	ReadFile();

@@ -61,7 +61,7 @@ public:
 	void MapCollision(int mapmove);
 
 	//”wŒiƒXƒNƒ[ƒ‹ˆ—
-	int BGScroll();
+	int BGScroll(int move_speed);
 
 };
 
