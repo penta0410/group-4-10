@@ -158,4 +158,10 @@ public:
 
 	//プレイヤーが空中状態かどうか
 	bool IsAirPlayer();
+
+	// ステータスを変更する
+	void SetState(PlayerState _state) { state = _state; }
+
+	// ステータス確認
+	PlayerState GetState() { return state; }
 };

@@ -40,7 +40,7 @@ void Player::Init()
 	m_alpha = 0;
 
 	//プレイヤーアニメ－ション状態
-	state = PLAYER_STATE_MIDAIR;
+	state = PLAYER_STATE_FALL;
 }
 
 //読み込み処理
@@ -67,6 +67,7 @@ void Player::Step()
 	switch (state) {
 	case PLAYER_STATE_RUN:	// プレイヤーが動いている最中なら
 		Control();			// 操作できる
+
 		break;
 
 	case PLAYER_STATE_JUMP:		// プレイヤーがジャンプ状態なら
@@ -104,7 +105,7 @@ void Player::Draw()
 	//	(m_posY - (PLAYER_SIZE / 2)) + PLAYER_SIZE, GetColor(255, 255, 255), true);
 
 	//プレイヤー回転値
-	DrawFormatString(0, 80, GetColor(255, 255, 255), "%f", m_Rot);
+	DrawFormatString(0, 80, GetColor(255, 255, 255), "%d", state);
 
 }
 
