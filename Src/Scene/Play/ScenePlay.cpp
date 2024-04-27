@@ -49,18 +49,6 @@ void Play::Load()
 //通常処理
 void Play::Step()
 {	
-	////マップ通常処理
-	//c_map.Step();
-
-	//// プレイヤー通常処理
-	//c_player.Step();
-
-	////背景スクロール処理
-	//BGScroll(BG_MOVE_SPEED);
-
-	////マップ当たり判定
-	//MapCollision(BGScroll(BG_MOVE_SPEED));
-
 	//プレイヤーが生きている時だけ処理を行う死んだらストップ
 	if (!c_player.DeathPlayer())
 	{
@@ -85,7 +73,6 @@ void Play::Step()
 
 		SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_FIN;
 	}
-	
 }
 
 //描画処理
@@ -171,7 +158,7 @@ void Play::MapCollision(int mapmove)
 			int Ah = PLAYER_SIZE;
 
 			//オブジェクトの情報
-			int Bx = mapIndexX * MAP_SIZE - mapmove;
+			int Bx = mapIndexX * MAP_SIZE;
 			int By = mapIndexY * MAP_SIZE;
 			int Bw = MAP_SIZE;
 			int Bh = MAP_SIZE;
@@ -181,7 +168,7 @@ void Play::MapCollision(int mapmove)
 			Ax = c_player.GetNextPosX();
 
 			//当たっているかチェック
-			if (IsHitRect(Ax + mapmove, Ay, Aw, Ah, Bx + mapmove, By, Bw, Bh)) 
+			if (IsHitRect(Ax, Ay, Aw, Ah, Bx, By, Bw, Bh)) 
 			{
 				// 上方向の修正
 				if (dirArray[0]) {
@@ -231,7 +218,7 @@ void Play::MapCollision(int mapmove)
 			int Ah = PLAYER_SIZE;
 
 			//オブジェクトの情報
-			int Bx = mapIndexX * MAP_SIZE - mapmove;
+			int Bx = mapIndexX * MAP_SIZE;
 			int By = mapIndexY * MAP_SIZE;
 			int Bw = MAP_SIZE;
 			int Bh = MAP_SIZE;
