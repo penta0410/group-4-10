@@ -246,6 +246,7 @@ void Play::MapCollision()
 					SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_FIN;
 				}
 
+
 				// ‰E•ûŒü‚ÌC³
 				if (Bx + Bw > Ax) {
 					// ‚ß‚èž‚Ý—Ê‚ðŒvŽZ‚·‚é

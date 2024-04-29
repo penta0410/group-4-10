@@ -112,8 +112,8 @@ void Player::Draw()
 	//	(m_posX - (PLAYER_SIZE / 2)) + PLAYER_SIZE,
 	//	(m_posY - (PLAYER_SIZE / 2)) + PLAYER_SIZE, GetColor(255, 255, 255), true);
 
-	//プレイヤー回転値
-	DrawFormatString(0, 80, GetColor(255, 255, 255), "%f", m_Rot);
+	////プレイヤー回転値
+	//DrawFormatString(0, 80, GetColor(255, 255, 255), "%f", m_Rot);
 
 }
 
