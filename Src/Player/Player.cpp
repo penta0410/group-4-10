@@ -44,7 +44,6 @@ void Player::Init()
 
 	// ÉQÅ[ÉÄÉÇÅ[Éh
 	gamemode = GAMEMODE_NORMAL;
-
 }
 
 //ì«Ç›çûÇ›èàóù
@@ -98,6 +97,26 @@ void Player::Step()
 		break;
 	}
 	m_nextPosY += m_move_y;
+
+	/*old_pos_x = m_posX;
+	old_pos_y = m_posY;
+
+	if (CheckHitKey(KEY_INPUT_W) == 1)
+	{
+		m_nextPosY -= 5;
+	}
+	if (CheckHitKey(KEY_INPUT_A) == 1)
+	{
+		m_nextPosX -= 5;
+	}
+	if (CheckHitKey(KEY_INPUT_S) == 1)
+	{
+		m_nextPosY += 5;
+	}
+	if (CheckHitKey(KEY_INPUT_D) == 1)
+	{
+		m_nextPosX += 5;
+	}*/
 
 }
 
