@@ -58,6 +58,7 @@ void Title::Fin()
 	for (int i = 0; i < TITLEHUNDLE_NUM; i++) {
 		DeleteGraph(_hundle[i]);
 	}
+	Sound::Bgm::StopSound(BGM_TITLE);
 
 	//ƒvƒŒƒC‚ÖˆÚ“®
 	SceneManager::g_CurrentSceneID = SCENE_ID::SCENE_ID_PLAY;

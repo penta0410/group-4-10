@@ -51,8 +51,6 @@ void Result::Draw()
 //Œãˆ—
 void Result::Fin()
 {
-
-	StopSound();
 	Sound::Bgm::StopSound(BGM_TITLE);
 
 	//ƒ^ƒCƒgƒ‹‚ÖˆÚ“®
