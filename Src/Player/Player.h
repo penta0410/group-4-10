@@ -24,6 +24,11 @@ enum PlayerState {
 	
 };
 
+// プレイヤーのゲームモード状況
+enum PlayerGamemode {
+	GAMEMODE_NORMAL,
+	GAMEMODE_SPACE,
+};
 class Player
 {
 private:
@@ -80,6 +85,9 @@ private:
 
 	//プレイヤーアニメ－ション状態
 	PlayerState state;
+
+	// ゲームモード
+	PlayerGamemode gamemode;
 
 public:
 
@@ -164,4 +172,10 @@ public:
 
 	// ステータス確認
 	PlayerState GetState() { return state; }
+
+	// ゲームモードを変更する
+	void SetState(PlayerGamemode _gamemode) { gamemode = _gamemode; }
+
+	// 宇宙状態の通常処理
+	void StepSpace();
 };

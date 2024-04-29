@@ -41,6 +41,13 @@ void Player::Init()
 
 	//プレイヤーアニメ－ション状態
 	state = PLAYER_STATE_FALL;
+
+	// ゲームモード
+	gamemode = GAMEMODE_SPACE;
+
+	if (gamemode == GAMEMODE_SPACE) {
+		m_Rot = 90.0f;
+	}
 }
 
 //読み込み処理
@@ -64,30 +71,35 @@ void Player::DefaultValue()
 //通常処理
 void Player::Step()
 {
-	switch (state) {
-	case PLAYER_STATE_RUN:	// プレイヤーが動いている最中なら
-		Control();			// 操作できる
+	switch (gamemode) {
+	case GAMEMODE_NORMAL:
+		switch (state) {
+		case PLAYER_STATE_RUN:	// プレイヤーが動いている最中なら
+			Control();			// 操作できる
 
-		break;
+			break;
 
-	case PLAYER_STATE_JUMP:		// プレイヤーがジャンプ状態なら
-		StepJump();				// ジャンプ処理
-		break;
+		case PLAYER_STATE_JUMP:		// プレイヤーがジャンプ状態なら
+			StepJump();				// ジャンプ処理
+			break;
 
-	case PLAYER_STATE_MIDAIR:	// プレイヤーが空中にいるなら
-		PlayerMovement();		// プレイヤー移動処理
-		CheckPlayerMidAir();	// プレイヤーが落下しているかチェック
-		break;
+		case PLAYER_STATE_MIDAIR:	// プレイヤーが空中にいるなら
+			PlayerMovement();		// プレイヤー移動処理
+			CheckPlayerMidAir();	// プレイヤーが落下しているかチェック
+			break;
 
-	case PLAYER_STATE_FALL:		// プレイヤーが落下しているなら
-		PlayerMovement();		// プレイヤー移動処理
-		break;
+		case PLAYER_STATE_FALL:		// プレイヤーが落下しているなら
+			PlayerMovement();		// プレイヤー移動処理
+			break;
 
-	case PLAYER_STATE_LANDING:	// プレイヤーが着地したなら
-		PlayerLanding();		// 着地処理
+		case PLAYER_STATE_LANDING:	// プレイヤーが着地したなら
+			PlayerLanding();		// 着地処理
+			break;
+		}
+	case GAMEMODE_SPACE:
+		StepSpace();
 		break;
 	}
-
 	m_nextPosY += m_move_y;
 
 }
@@ -96,7 +108,7 @@ void Player::Step()
 void Player::Draw()
 {
 	// プレイヤーの描画
-	DrawRotaGraph(m_posX + (PLAYER_SIZE / 2), m_posY + (PLAYER_SIZE / 2), 1.0f, m_Rot, m_ImageHandle, true);
+	DrawRotaGraph(m_posX + (PLAYER_SIZE / 2), m_posY + (PLAYER_SIZE / 2), 1.0f, m_Rot / 180.0f * DX_PI_F, m_ImageHandle, true);
 
 	//デバッグ
 	//プレイヤー当たり判定（真ん中が原点のため矯正）
@@ -105,7 +117,7 @@ void Player::Draw()
 	//	(m_posY - (PLAYER_SIZE / 2)) + PLAYER_SIZE, GetColor(255, 255, 255), true);
 
 	//プレイヤー回転値
-	DrawFormatString(0, 80, GetColor(255, 255, 255), "%d", state);
+	DrawFormatString(0, 80, GetColor(255, 255, 255), "%f", m_Rot);
 
 }
 
@@ -197,6 +209,25 @@ bool Player::IsAirPlayer()
 
 	return false;
 
+}
+
+// 宇宙状態の通常処理
+void Player::StepSpace()
+{
+	if (IsKeyKeep(KEY_INPUT_SPACE)) {
+		m_move_y -= GRAVITY / 2;
+		m_Rot -= 2.0f;
+	}
+	else {
+		m_move_y += GRAVITY / 2;
+		m_Rot += 2.0f;
+	}
+	if (m_Rot < 45.0f) {
+		m_Rot = 45.0f;
+	}
+	if (m_Rot > 135.0f) {
+		m_Rot = 135.0f;
+	}
 }
 
 //天井処理
