@@ -43,7 +43,7 @@ void Player::Init()
 	state = PLAYER_STATE_FALL;
 
 	// ÉQÅ[ÉÄÉÇÅ[Éh
-	gamemode = GAMEMODE_S;
+	gamemode = GAMEMODE_SPACE;
 
 	if (gamemode == GAMEMODE_SPACE) {
 		m_Rot = 90.0f;
@@ -101,6 +101,26 @@ void Player::Step()
 		break;
 	}
 	m_nextPosY += m_move_y;
+
+	/*old_pos_x = m_posX;
+	old_pos_y = m_posY;
+
+	if (CheckHitKey(KEY_INPUT_W) == 1)
+	{
+		m_nextPosY -= 5;
+	}
+	if (CheckHitKey(KEY_INPUT_A) == 1)
+	{
+		m_nextPosX -= 5;
+	}
+	if (CheckHitKey(KEY_INPUT_S) == 1)
+	{
+		m_nextPosY += 5;
+	}
+	if (CheckHitKey(KEY_INPUT_D) == 1)
+	{
+		m_nextPosX += 5;
+	}*/
 
 }
 

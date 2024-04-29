@@ -23,7 +23,7 @@ void Play::Init()
 	//背景移動量
 	m_BG_move_x = 0;
 
-
+	mapmove = 0;
 
 
 	//用意した画像枚数だけ
@@ -62,7 +62,7 @@ void Play::Step()
 		BGScroll(BG_MOVE_SPEED);
 
 		//マップ当たり判定
-		MapCollision(BGScroll(BG_MOVE_SPEED));
+		MapCollision();
 	}
 	//シーンへの遷移
 	//エンター押されたなら
@@ -132,8 +132,10 @@ int Play::BGScroll(int move_speed)
 }
 
 //マップの当たり判定
-void Play::MapCollision(int mapmove)
+void Play::MapCollision()
 {
+	mapmove -= 5;
+
 	//プレイヤー
 	//Y方向のみ当たり判定をチェックする
 	for (int mapIndexY = 0; mapIndexY < MAP_DATA_Y; mapIndexY++)
@@ -158,7 +160,7 @@ void Play::MapCollision(int mapmove)
 			int Ah = PLAYER_SIZE;
 
 			//オブジェクトの情報
-			int Bx = mapIndexX * MAP_SIZE;
+			int Bx = mapIndexX * MAP_SIZE + mapmove;
 			int By = mapIndexY * MAP_SIZE;
 			int Bw = MAP_SIZE;
 			int Bh = MAP_SIZE;
@@ -218,7 +220,7 @@ void Play::MapCollision(int mapmove)
 			int Ah = PLAYER_SIZE;
 
 			//オブジェクトの情報
-			int Bx = mapIndexX * MAP_SIZE;
+			int Bx = mapIndexX * MAP_SIZE + mapmove;
 			int By = mapIndexY * MAP_SIZE;
 			int Bw = MAP_SIZE;
 			int Bh = MAP_SIZE;

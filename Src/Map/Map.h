@@ -75,5 +75,8 @@ public:
 	//マップ到達度処理
 	void MapReachLevel();
 
+	//ゲットマップ移動
+	int GetMapMove() { return m_Map_Move_x; };
+
 };
 

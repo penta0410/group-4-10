@@ -40,6 +40,8 @@ private:
 	//背景移動量
 	int m_BG_move_x;
 
+	int mapmove;
+
 public:
 
 	Map c_map;				//マップクラス宣言
@@ -58,7 +60,7 @@ public:
 	void Fin() override;
 	
 	// マップの当たり判定
-	void MapCollision(int mapmove);
+	void MapCollision();
 
 	//背景スクロール処理
 	int BGScroll(int move_speed);
