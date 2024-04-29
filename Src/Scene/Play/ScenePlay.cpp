@@ -30,6 +30,7 @@ void Play::Init()
 	{
 		m_ImageHandle[i] = -1;
 	}
+
 }
 
 //ÉçÅ[Éh
