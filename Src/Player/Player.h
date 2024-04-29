@@ -11,7 +11,7 @@ const float GRAVITY = 1.2f;
 const int PLAYER_SIZE = 60;
 const float PLAYER_JUMP_POWER = 20.0f;
 const char PLAYER_PATH[] = { "Data/Play/player.png" };
-const float ROTAITION_SPEED = 0.002f;
+const float ROTAITION_SPEED = 2.0f;
 
 //プレイヤーのアニメーションの状態
 enum PlayerState {
@@ -173,8 +173,19 @@ public:
 	// ステータス確認
 	PlayerState GetState() { return state; }
 
-	// ゲームモードを変更する
-	void SetState(PlayerGamemode _gamemode) { gamemode = _gamemode; }
+	// ゲームモードを通常に変更する
+	void SetGamemodeNormal() 
+	{ 
+		gamemode = GAMEMODE_NORMAL; 
+		m_Rot = 0.0f;
+	}
+
+	// ゲームモードを宇宙に変更する
+	void SetGamemodeSpace()
+	{
+		gamemode = GAMEMODE_SPACE;
+		m_Rot = 90.0f;
+	}
 
 	// 宇宙状態の通常処理
 	void StepSpace();
