@@ -208,6 +208,20 @@ bool Player::IsAirPlayer()
 
 }
 
+// ゲームモードを変更する
+void Player::SetGamemodeNoramal()
+{
+	gamemode = GAMEMODE_NORMAL;
+	m_Rot = 0.0f;
+	state = PLAYER_STATE_FALL;
+}
+
+void Player::SetGamemodeSpace()
+{
+	gamemode = GAMEMODE_SPACE;
+	m_Rot = 90.0f;
+}
+
 // 宇宙状態の通常処理
 void Player::StepSpace()
 {

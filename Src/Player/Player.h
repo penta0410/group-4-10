@@ -174,7 +174,9 @@ public:
 	PlayerState GetState() { return state; }
 
 	// ゲームモードを変更する
-	void SetState(PlayerGamemode _gamemode) { gamemode = _gamemode; }
+	void SetGamemodeNoramal();
+	void SetGamemodeSpace();
+
 
 	// 宇宙状態の通常処理
 	void StepSpace();
