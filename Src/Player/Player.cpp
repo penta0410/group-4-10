@@ -98,6 +98,13 @@ void Player::Step()
 	}
 	m_nextPosY += m_move_y;
 
+	//クリアしたら
+	if (c_play.IsClear() == true)
+	{
+		m_move_x += 3;
+	}
+	m_nextPosX += m_move_x;
+
 }
 
 //描画処理
@@ -105,6 +112,17 @@ void Player::Draw()
 {
 	// プレイヤーの描画
 	DrawRotaGraph(m_posX + (PLAYER_SIZE / 2), m_posY + (PLAYER_SIZE / 2), 1.0f, m_Rot / 180.0f * DX_PI_F, m_ImageHandle, true);
+
+	SetFontSize(26);
+	if (gamemode == GAMEMODE_NORMAL)
+	{
+		DrawFormatString(0, 60, GetColor(0, 100, 255), "モード：＜ノーマル＞", true);
+	}
+	else if (gamemode == GAMEMODE_SPACE)
+	{
+		DrawFormatString(0, 60, GetColor(255, 100, 0), "モード：＜スペース＞", true);
+	}
+	SetFontSize(16);
 
 	//デバッグ
 	//プレイヤー当たり判定（真ん中が原点のため矯正）
@@ -209,14 +227,13 @@ bool Player::IsAirPlayer()
 void Player::SetGamemodeNoramal()
 {
 	gamemode = GAMEMODE_NORMAL;
-	m_Rot = 0.0f;
-	state = PLAYER_STATE_FALL;
+	
+	
 }
 
 void Player::SetGamemodeSpace()
 {
 	gamemode = GAMEMODE_SPACE;
-	m_Rot = 90.0f;
 }
 
 // 宇宙状態の通常処理

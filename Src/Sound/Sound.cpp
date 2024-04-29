@@ -29,6 +29,7 @@ char seSoundPath[SE_MAX_NUM][255] =
 	"data/sound/se/clear.wav",		//正解
 	"data/sound/se/miss.wav",		//不正解
 	"data/sound/se/damage.mp3",		//ダメージ
+	"data/Sound/Play/PlayerChange.mp3",		//変化音
 };
 
 //音量

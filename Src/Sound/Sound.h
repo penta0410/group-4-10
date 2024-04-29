@@ -17,6 +17,7 @@ enum SE_TYPE
 	SE_CLEAR,		//正解
 	SE_MISS,		//不正解
 	SE_DAMAGE,		//ダメージ
+	SE_CHANGE,		//変化
 
 	SE_MAX_NUM
 };
