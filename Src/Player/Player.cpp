@@ -43,7 +43,11 @@ void Player::Init()
 	state = PLAYER_STATE_FALL;
 
 	// ゲームモード
-	gamemode = GAMEMODE_NORMAL;
+	gamemode = GAMEMODE_SPACE;
+
+	if (gamemode == GAMEMODE_SPACE) {
+		m_Rot = 90.0f;
+	}
 }
 
 //読み込み処理
@@ -57,7 +61,7 @@ void Player::DefaultValue()
 {
 	//座標
 	m_posX = PLAYER_SIZE * 6;	//X座標
-	m_posY = PLAYER_SIZE / 2;	//Y座標
+	m_posY = PLAYER_SIZE / 2 * 2;	//Y座標
 	m_nextPosX = m_posX;		//移動後のX座標
 	m_nextPosY = m_posY;		//移動後のY座標
 	old_pos_x = m_posX;			//移動前のX座標
@@ -72,7 +76,6 @@ void Player::Step()
 		switch (state) {
 		case PLAYER_STATE_RUN:	// プレイヤーが動いている最中なら
 			Control();			// 操作できる
-
 			break;
 
 		case PLAYER_STATE_JUMP:		// プレイヤーがジャンプ状態なら
@@ -92,7 +95,6 @@ void Player::Step()
 			PlayerLanding();		// 着地処理
 			break;
 		}
-		break;
 	case GAMEMODE_SPACE:
 		StepSpace();
 		break;
@@ -227,11 +229,11 @@ void Player::StepSpace()
 {
 	if (IsKeyKeep(KEY_INPUT_SPACE)) {
 		m_move_y -= GRAVITY / 2;
-		m_Rot -= ROTAITION_SPEED;
+		m_Rot -= 2.0f;
 	}
 	else {
 		m_move_y += GRAVITY / 2;
-		m_Rot += ROTAITION_SPEED;
+		m_Rot += 2.0f;
 	}
 	if (m_Rot < 45.0f) {
 		m_Rot = 45.0f;
@@ -263,11 +265,7 @@ void Player::CalcGravity()
 // プレイヤー回転処理
 void Player::PlayerRotation()
 {
-	m_Rot += ROTAITION_SPEED;
-
-	if (m_Rot > 360.0f) {
-		m_Rot = 0.0f;
-	}
+	m_Rot += ROTAITION_SPEED * 180 / DX_PI;
 }
 
 // プレイヤー移動処理
@@ -302,23 +300,9 @@ void Player::PlayerLanding()
 {
 	//ｙの移動量をリセット
 	m_move_y = 0.0f;
-	// 回転値は角度によって決める
-	if (m_Rot < 45.0f) {
-		m_Rot = 0.0f;
-	}
-	else if (m_Rot < 135.0f) {
-		m_Rot = 90.0f;
-	}
-	else if (m_Rot < 225.0f) {
-		m_Rot = 180.0f;
-	}
-	else if (m_Rot < 315.0f) {
-		m_Rot = 270.0f;
-	}
-	else {
-		m_Rot = 0.0f;
-	}
-
+	// 回転値も
+	m_Rot = 0.0f;
+	
 	//走っている状態に変更
 	state = PLAYER_STATE_RUN;
 }
