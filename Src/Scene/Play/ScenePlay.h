@@ -40,7 +40,11 @@ private:
 	//背景移動量
 	int m_BG_move_x;
 
+	//マップムーブ
 	int mapmove;
+
+	//クリアフラグ
+	bool IsClear;
 
 public:
 
@@ -64,6 +68,9 @@ public:
 
 	//背景スクロール処理
 	int BGScroll(int move_speed);
+
+	//クリアしたかどうか
+	bool IsClear() { return IsClear; };
 
 };
 

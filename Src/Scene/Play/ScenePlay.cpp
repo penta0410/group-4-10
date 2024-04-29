@@ -16,6 +16,7 @@ void Play::Init()
 	c_player.Init();
 	c_player.DefaultValue();
 	Sound::Bgm::Play(BGM_PLAY);
+	
 	//背景座標
 	m_BG_x[0] = WINDOW_WIDTH / 2;		//背景１
 	m_BG_x[1] = WINDOW_WIDTH + (WINDOW_WIDTH / 2);		//背景２
@@ -24,7 +25,11 @@ void Play::Init()
 	//背景移動量
 	m_BG_move_x = 0;
 
+	//マップムーブ
 	mapmove = 0;
+
+	//クリアフラグ
+	IsClear = false;
 
 	//用意した画像枚数だけ
 	for (int i = 0; i < PLAY_IMAGE_PATH_NUM; i++)
@@ -53,17 +58,22 @@ void Play::Step()
 	//プレイヤーが生きている時だけ処理を行う死んだらストップ
 	if (!c_player.DeathPlayer())
 	{
-		//マップ通常処理
-		c_map.Step();
-
 		// プレイヤー通常処理
 		c_player.Step();
 
-		//背景スクロール処理
-		BGScroll(BG_MOVE_SPEED);
+		//クリア状態じゃないとき
+		if (IsClear == false)
+		{
+			//背景スクロール処理
+			BGScroll(BG_MOVE_SPEED);
+
+			//マップ通常処理
+			c_map.Step();
+		}
 
 		//マップ当たり判定
 		MapCollision();
+		
 	}
 	//シーンへの遷移
 	//エンター押されたなら
@@ -139,6 +149,32 @@ void Play::MapCollision()
 {
 	mapmove -= 5;
 
+	//プレイヤー形態変化
+	if (mapmove < - 6000 && mapmove > -10000)
+	{
+		c_player.SetGamemodeSpace();
+		Sound::Se::Play(SE_CHANGE);
+	}
+	else if (mapmove <= -10000 && mapmove > -14000)
+	{
+		c_player.SetGamemodeNoramal();
+		Sound::Se::Play(SE_CHANGE);
+	}
+	else if (mapmove <= -14000 && mapmove > -22000)
+	{
+		c_player.SetGamemodeSpace();
+		Sound::Se::Play(SE_CHANGE);
+	}
+	else if (mapmove <= -22000)
+	{
+		c_player.SetGamemodeNoramal();
+		//ゲームクリア
+		if (mapmove <= -22100)
+		{
+			IsClear = true;
+		}
+	}
+
 	//プレイヤー
 	//Y方向のみ当たり判定をチェックする
 	for (int mapIndexY = 0; mapIndexY < MAP_DATA_Y; mapIndexY++)
@@ -198,6 +234,13 @@ void Play::MapCollision()
 					//落下したら
 					c_player.PlayerLanding();
 
+					//トラップ処理
+					if (c_map.m_FileReadMapData[mapIndexY][mapIndexX] == 2)
+					{
+						c_player.SetisDeath(true);
+						SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_FIN;
+
+					}
 				}
 			}
 		}
@@ -245,6 +288,7 @@ void Play::MapCollision()
 					c_player.SetisDeath(true);
 					SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_FIN;
 				}
+
 
 				// 右方向の修正
 				if (Bx + Bw > Ax) {
