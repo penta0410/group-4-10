@@ -176,13 +176,11 @@ void Player::GetMoveDirection(bool* _dirArray) {
 	if (m_nextPosX < m_posX) {
 
 		_dirArray[2] = true;
-
 	}
 
 	// 下方向のチェック
 	if (m_nextPosY > m_posY) {
 		_dirArray[1] = true;
-
 	}
 
 	// 上方向のチェック
