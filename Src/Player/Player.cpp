@@ -43,11 +43,8 @@ void Player::Init()
 	state = PLAYER_STATE_FALL;
 
 	// ÉQÅ[ÉÄÉÇÅ[Éh
-	gamemode = GAMEMODE_S;
+	gamemode = GAMEMODE_NORMAL;
 
-	if (gamemode == GAMEMODE_SPACE) {
-		m_Rot = 90.0f;
-	}
 }
 
 //ì«Ç›çûÇ›èàóù
