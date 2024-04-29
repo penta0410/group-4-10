@@ -25,7 +25,6 @@ void Play::Init()
 
 	mapmove = 0;
 
-
 	//—pˆÓ‚µ‚½‰æ‘œ–‡”‚¾‚¯
 	for (int i = 0; i < PLAY_IMAGE_PATH_NUM; i++)
 	{
@@ -69,7 +68,7 @@ void Play::Step()
 	if (IsKeyPush(KEY_INPUT_RETURN))
 	{
 		//Œãˆ—‚ÖˆÚ“®
-		//c_player.SetisDeath(true);
+		c_player.SetisDeath(true);
 
 		SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_FIN;
 	}
