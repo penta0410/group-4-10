@@ -233,7 +233,7 @@ void Play::MapCollision()
 			if (IsHitRect(Ax, Ay, Aw, Ah, Bx, By, Bw, Bh)) 
 			{
 				// ¶•ûŒü‚ÌC³
-				if (dirArray[2]) {
+				if (Bx < Ax + Aw) {
 					// ‚ß‚è‚İ—Ê‚ğŒvZ‚·‚é
 					int overlap = Bx + Bw - Ax;
 					c_player.SetNextPosX(Ax + overlap);
@@ -244,7 +244,7 @@ void Play::MapCollision()
 				}
 
 				// ‰E•ûŒü‚ÌC³
-				if (dirArray[3]) {
+				if (Bx + Bw > Ax) {
 					// ‚ß‚è‚İ—Ê‚ğŒvZ‚·‚é
 					int overlap = Ax + Aw - Bx;
 					c_player.SetNextPosX(Ax - overlap);
