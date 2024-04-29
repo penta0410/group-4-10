@@ -2,15 +2,21 @@
 #include "../../Transparent/Transparent.h"
 #include "../Scene.h"
 
+const char RESULT_PATH[] = { "Data/Result/Result.png" };
+const char RESULTSTCLEAR_PATH[] = { "Data/Result/STClear.png" };
 
 //リザルトクラス
 class Result : public Scene_Base
 {
 private:
-	
+	enum RESULTHUNDLE {
+		RESULTHUNDLE_RESULT,	// リザルト
+		RESULTHUNDLE_STCLEAR,	// ステージクリア
 
+		RESULTHUNDLE_NUM,
+	};
 
-
+	int _hundle[RESULTHUNDLE_NUM];
 
 public:
 
