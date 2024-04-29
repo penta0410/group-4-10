@@ -5,6 +5,7 @@
 #include "FPS/fps.h"
 #include "Input/Input.h"
 #include "Scene/SceneManager/SceneManager.h"
+#include "Sound/Sound.h"
 
 FrameRateInfo frameRateInfo;			//フレームレート情報変数
 
@@ -27,6 +28,8 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	SetDrawScreen(DX_SCREEN_BACK);
 	//入力制御初期化
 	InitInput();
+	//サウンド初期化
+	Sound::Init();
 
 	//シーンマネージャー初期化
 	c_scene_manager.InitScene();

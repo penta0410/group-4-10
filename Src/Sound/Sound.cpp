@@ -8,7 +8,7 @@ int Sound::Se::handle[SE_MAX_NUM];
 char bgmSoundPath[BGM_MAX_NUM][255] =
 {
 	//音楽
-	"data/sound/bgm/title.mp3",	//タイトル
+	"Data/Sound/Title/Title.mp3",	//タイトル
 	"data/sound/bgm/play.mp3",	//プレイ
 	"data/sound/bgm/result.mp3",	//リザルト
 };
@@ -16,7 +16,7 @@ char bgmSoundPath[BGM_MAX_NUM][255] =
 //音量
 int soundVolume_bgm[BGM_MAX_NUM] =
 {
-	70,	//タイトル
+	100,	//タイトル
 	55,	//プレイ
 	60,	//リザルト
 };

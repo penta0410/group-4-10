@@ -5,11 +5,23 @@
 #include "../../Collision/Collision.h"
 #include "../Scene.h"
 
+const char TITLE_PATH[] = { "Data/Play/Title.png" };
+const char TITLEROGO_PATH[] = { "Data/Play/TitleRogo.png" };
+const char TITLEP2ENTER_PATH[] = { "Data/Play/P2Enter.png" };
+
 //タイトルクラス
 class Title : public Scene_Base
 {
 private:
-	
+	enum TITLEHUNDLE {
+		TITLEHUNDLE_TITLE,	// タイトル
+		TITLEHUNDLE_TITLEROGO,	// タイトルロゴ
+		TITLEHUNDLE_P2ENTER,	// プレス2エンター
+
+		TITLEHUNDLE_NUM,
+	};
+
+	int _hundle[TITLEHUNDLE_NUM];
 	
 
 public:
