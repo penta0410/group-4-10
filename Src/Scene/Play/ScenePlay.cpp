@@ -1,6 +1,7 @@
 #pragma once
 #include "ScenePlay.h"
 #include "../SceneManager/SceneManager.h"
+#include "../../Sound/Sound.h"
 
 //=============================
 // プレイシーン
@@ -14,7 +15,7 @@ void Play::Init()
 	//プレイヤー初期化
 	c_player.Init();
 	c_player.DefaultValue();
-
+	Sound::Bgm::Play(BGM_PLAY);
 	//背景座標
 	m_BG_x[0] = WINDOW_WIDTH / 2;		//背景１
 	m_BG_x[1] = WINDOW_WIDTH + (WINDOW_WIDTH / 2);		//背景２
@@ -98,6 +99,7 @@ void Play::Fin()
 {
 	//プレイヤー終了処理
 	c_player.Fin();
+	Sound::Bgm::StopSound(BGM_PLAY);
 
 	// もしプレイヤーが死んでいるなら
 	if (c_player.DeathPlayer())

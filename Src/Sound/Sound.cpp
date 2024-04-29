@@ -9,7 +9,7 @@ char bgmSoundPath[BGM_MAX_NUM][255] =
 {
 	//音楽
 	"Data/Sound/Title/Title.mp3",	//タイトル
-	"data/sound/bgm/play.mp3",	//プレイ
+	"data/Sound/Play/Skyline.mp3",	//プレイ
 	"data/sound/bgm/result.mp3",	//リザルト
 };
 
@@ -17,7 +17,7 @@ char bgmSoundPath[BGM_MAX_NUM][255] =
 int soundVolume_bgm[BGM_MAX_NUM] =
 {
 	100,	//タイトル
-	55,	//プレイ
+	100,	//プレイ
 	60,	//リザルト
 };
 
