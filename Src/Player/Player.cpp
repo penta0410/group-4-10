@@ -44,10 +44,6 @@ void Player::Init()
 
 	// ゲームモード
 	gamemode = GAMEMODE_NORMAL;
-
-	if (gamemode == GAMEMODE_SPACE) {
-		m_Rot = 90.0f;
-	}
 }
 
 //読み込み処理
@@ -96,6 +92,7 @@ void Player::Step()
 			PlayerLanding();		// 着地処理
 			break;
 		}
+		break;
 	case GAMEMODE_SPACE:
 		StepSpace();
 		break;
@@ -216,11 +213,11 @@ void Player::StepSpace()
 {
 	if (IsKeyKeep(KEY_INPUT_SPACE)) {
 		m_move_y -= GRAVITY / 2;
-		m_Rot -= 2.0f;
+		m_Rot -= ROTAITION_SPEED;
 	}
 	else {
 		m_move_y += GRAVITY / 2;
-		m_Rot += 2.0f;
+		m_Rot += ROTAITION_SPEED;
 	}
 	if (m_Rot < 45.0f) {
 		m_Rot = 45.0f;
@@ -252,7 +249,11 @@ void Player::CalcGravity()
 // プレイヤー回転処理
 void Player::PlayerRotation()
 {
-	m_Rot += ROTAITION_SPEED * 180 / DX_PI;
+	m_Rot += ROTAITION_SPEED;
+
+	if (m_Rot > 360.0f) {
+		m_Rot = 0.0f;
+	}
 }
 
 // プレイヤー移動処理
@@ -287,9 +288,23 @@ void Player::PlayerLanding()
 {
 	//ｙの移動量をリセット
 	m_move_y = 0.0f;
-	// 回転値も
-	m_Rot = 0.0f;
-	
+	// 回転値は角度によって決める
+	if (m_Rot < 45.0f) {
+		m_Rot = 0.0f;
+	}
+	else if (m_Rot < 135.0f) {
+		m_Rot = 90.0f;
+	}
+	else if (m_Rot < 225.0f) {
+		m_Rot = 180.0f;
+	}
+	else if (m_Rot < 315.0f) {
+		m_Rot = 270.0f;
+	}
+	else {
+		m_Rot = 0.0f;
+	}
+
 	//走っている状態に変更
 	state = PLAYER_STATE_RUN;
 }

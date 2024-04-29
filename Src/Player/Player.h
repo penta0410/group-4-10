@@ -11,7 +11,7 @@ const float GRAVITY = 1.2f;
 const int PLAYER_SIZE = 60;
 const float PLAYER_JUMP_POWER = 20.0f;
 const char PLAYER_PATH[] = { "Data/Play/player.png" };
-const float ROTAITION_SPEED = 0.002f;
+const float ROTAITION_SPEED = 2.0f;
 
 //プレイヤーのアニメーションの状態
 enum PlayerState {
