@@ -68,8 +68,8 @@ void Play::Step()
 	//ƒGƒ“ƒ^[‰Ÿ‚³‚ê‚½‚È‚ç
 	if (IsKeyPush(KEY_INPUT_RETURN))
 	{
-		//Œãˆ—‚ÖˆÚ“®
-		c_player.SetisDeath(true);
+		////Œãˆ—‚ÖˆÚ“®
+		//c_player.SetisDeath(true);
 
 		SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_FIN;
 	}
