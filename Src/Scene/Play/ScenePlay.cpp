@@ -73,6 +73,7 @@ void Play::Step()
 
 		SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_FIN;
 	}
+
 }
 
 //•`‰æˆ—

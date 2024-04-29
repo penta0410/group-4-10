@@ -43,7 +43,7 @@ void Player::Init()
 	state = PLAYER_STATE_FALL;
 
 	// ゲームモード
-	gamemode = GAMEMODE_NORMAL;
+	gamemode = GAMEMODE_SPACE;
 
 	if (gamemode == GAMEMODE_SPACE) {
 		m_Rot = 90.0f;
@@ -61,7 +61,7 @@ void Player::DefaultValue()
 {
 	//座標
 	m_posX = PLAYER_SIZE * 6;	//X座標
-	m_posY = PLAYER_SIZE / 2;	//Y座標
+	m_posY = PLAYER_SIZE / 2 * 2;	//Y座標
 	m_nextPosX = m_posX;		//移動後のX座標
 	m_nextPosY = m_posY;		//移動後のY座標
 	old_pos_x = m_posX;			//移動前のX座標
@@ -76,7 +76,6 @@ void Player::Step()
 		switch (state) {
 		case PLAYER_STATE_RUN:	// プレイヤーが動いている最中なら
 			Control();			// 操作できる
-
 			break;
 
 		case PLAYER_STATE_JUMP:		// プレイヤーがジャンプ状態なら
