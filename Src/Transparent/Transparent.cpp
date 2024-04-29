@@ -18,7 +18,6 @@ int Transparent(int alpha, int speed)
 		{
 			Flag = false;
 		}
-		
 	}
 	//BottanAlphaFlag‚ªfalse‚Ì‚É’Êí‚É–ß‚·
 	if (!Flag)

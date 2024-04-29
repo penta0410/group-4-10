@@ -27,7 +27,7 @@ enum MapChipType {
 	MAPCHIP_TRAP,
 	MAPCHIP_HEART,
 
-	MAPCHIP_MAX
+	MAPCHIP_MAX,
 };
 
 // マップクラス
