@@ -179,7 +179,7 @@ void Play::MapCollision()
 		c_player.SetGamemodeNoramal();
 
 		//ゲームクリア
-		if (mapmove <= -22100)
+		if (mapmove <= -21500)
 		{
 			//終了処理
 			SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_FIN;
