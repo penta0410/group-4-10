@@ -181,7 +181,8 @@ void Play::MapCollision()
 		//ゲームクリア
 		if (mapmove <= -22100)
 		{
-			Isclear = true;
+			//終了処理
+			SceneManager::g_CurrentSceneStateID = SCENE_STATE_ID::SCENE_ID_FIN;
 		}
 	}
 
