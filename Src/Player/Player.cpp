@@ -98,13 +98,6 @@ void Player::Step()
 	}
 	m_nextPosY += m_move_y;
 
-	//ƒNƒŠƒA‚µ‚½‚ç
-	if (c_play.IsClear() == true)
-	{
-		m_move_x += 3;
-	}
-	m_nextPosX += m_move_x;
-
 }
 
 //•`‰æˆ—

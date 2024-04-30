@@ -44,7 +44,7 @@ private:
 	int mapmove;
 
 	//クリアフラグ
-	bool IsClear;
+	bool Isclear;
 
 public:
 
@@ -70,7 +70,7 @@ public:
 	int BGScroll(int move_speed);
 
 	//クリアしたかどうか
-	bool IsClear() { return IsClear; };
+	bool IsClear() { return Isclear; };
 
 };
 

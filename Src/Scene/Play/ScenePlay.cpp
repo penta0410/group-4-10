@@ -29,7 +29,7 @@ void Play::Init()
 	mapmove = 0;
 
 	//クリアフラグ
-	IsClear = false;
+	Isclear = false;
 
 	//用意した画像枚数だけ
 	for (int i = 0; i < PLAY_IMAGE_PATH_NUM; i++)
@@ -62,7 +62,7 @@ void Play::Step()
 		c_player.Step();
 
 		//クリア状態じゃないとき
-		if (IsClear == false)
+		if (Isclear == false)
 		{
 			//背景スクロール処理
 			BGScroll(BG_MOVE_SPEED);
@@ -75,6 +75,15 @@ void Play::Step()
 		MapCollision();
 		
 	}
+
+	////クリアしたら
+	//if (IsClear() == true)
+	//{
+	//	m_move_x += 3;
+	//}
+	//m_nextPosX += m_move_x;
+
+
 	//シーンへの遷移
 	//エンター押されたなら
 	if (IsKeyPush(KEY_INPUT_RETURN))
@@ -168,10 +177,11 @@ void Play::MapCollision()
 	else if (mapmove <= -22000)
 	{
 		c_player.SetGamemodeNoramal();
+
 		//ゲームクリア
 		if (mapmove <= -22100)
 		{
-			IsClear = true;
+			Isclear = true;
 		}
 	}
 

@@ -5,7 +5,6 @@
 #include "../Scene/Scene.h"
 #include "../Collision/Collision.h"
 #include "../Enemy/Enemy.h"
-#include "../Scene/Play/ScenePlay.h"
 
 const int PLAYER_IMAGE_NUM = 12;										//画像の配列の数
 const float GRAVITY = 1.2f;
@@ -35,7 +34,6 @@ class Player
 private:
 	//クラス宣言
 	Screen screen;
-	Play c_play;
 
 	//プレイヤーの座標
 	float m_posX;
